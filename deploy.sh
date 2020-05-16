@@ -10,7 +10,14 @@ p=0 i=0 p=0 b=0 d=0 w=0
 CF_FILE="/tmp/cf_file.txt"
 DEPLOYMENTS_BUCKET="maudeployments"
 
-case "$1" in
+if [[ $1 == "-p" ]] || [[ $1 == "--project" ]]; then
+  project=$2
+  cd $project
+else
+  exit 126 # Command invoked cannot execute
+fi
+
+case "$3" in
   -i|--install)
     i=1
     shift
@@ -31,11 +38,6 @@ case "$1" in
     w=1
     shift
     ;;
-  -p|--project)
-    p=1
-    project=$2
-    shift
-    ;;
   --)
     shift
     break
@@ -45,34 +47,27 @@ case "$1" in
 esac
 
 if [[ $i -eq 1 ]]; then
-  echo install
-#   mkdir -p build
-#   cp -r src/* build/
+  mkdir -p build
+  cp -r src/* build/
 fi
 
 if [[ $b -eq 1 ]]; then
-  echo build
-# aws cloudformation package \
-#   --template-file template.yaml \
-#   --s3-bucket $DEPLOYMENTS_BUCKET \
-#   --output-template-file $CF_FILE
+  aws cloudformation package \
+    --template-file template.yaml \
+    --s3-bucket $DEPLOYMENTS_BUCKET \
+    --output-template-file $CF_FILE
 
 fi
 
 if [[ $d -eq 1 ]]; then
   echo deploy
-# aws cloudformation deploy \
-#   --no-fail-on-empty-changeset \
-#   --template-file $CF_FILE \
-#   --parameter-overrides Project=cf_lab2  \
-#   --stack-name "my-awesome-stack3" \
-#   --capabilities CAPABILITY_NAMED_IAM
+  aws cloudformation deploy \
+    --no-fail-on-empty-changeset \
+    --template-file $CF_FILE \
+    --stack-name $project \
+    --capabilities CAPABILITY_NAMED_IAM
 fi
 
 if [[ $r -eq 1 ]]; then
   echo remove
-fi
-
-if [[ $p -eq 1  ]]; then
-  echo $project
 fi

@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Description: Resources that validate students AWS Resources
+
+Resources:
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: jn-validator-lambda-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName: jn-validator-lambda-policy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource: arn:aws:logs:*:*:*
+
+  ResourceValidator:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: jn-resource-validator
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: resource_validator.handler
+      Role: !GetAtt LambdaRole.Arn
+    #   Events:
+    #     GetUsers2:
+    #       Type: Api
+    #       Properties:
+    #         RestApiId: !Ref MyAPI
+    #         Path: /users/{user_name}
+    #         Method: GET
