@@ -1,0 +1,53 @@
+openapi: 3.0.0
+
+paths:
+  /validator:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Validation'
+        
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:journey-resource-validator/invocations"
+        httpMethod: "POST"
+
+  /credentials:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialsInfo'
+        
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:journey-save-credentials/invocations"
+        httpMethod: "POST"
+
+components:
+  schemas:
+    CredentialsInfo:
+      type: object
+      properties:
+        user:
+          type: string
+        region:
+          type: string
+        access_token:
+          type: string
+        secret:
+          type: string
+    Validation:
+      type: object
+      properties:
+        user:
+          type: string
+        lab:
+          type: string

@@ -31,6 +31,17 @@ Resources:
             - logs:PutLogEvents
             Resource: arn:aws:logs:*:*:*
 
+  ValidatorAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: journey-validator-api
+      StageName: prod
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: swagger.yaml
+
   ResourceValidator:
     Type: AWS::Serverless::Function
     Properties:
@@ -39,10 +50,26 @@ Resources:
       CodeUri: ./build
       Handler: resource_validator.handler
       Role: !GetAtt LambdaRole.Arn
-    #   Events:
-    #     GetUsers2:
-    #       Type: Api
-    #       Properties:
-    #         RestApiId: !Ref MyAPI
-    #         Path: /users/{user_name}
-    #         Method: GET
+      Events:
+        PostValidator:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ValidatorAPI
+            Path: /validate
+            Method: POST
+
+  SaveCredentials:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-save-credentials
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: save_credentials.handler
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        PostSaveCredentials:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ValidatorAPI
+            Path: /credentials
+            Method: POST
