@@ -47,6 +47,9 @@ Resources:
       AllowedOAuthScopes:
         - email
         - openid
+        - phone
+        - profile
+        - aws.cognito.signin.user.admin
       CallbackURLs:
         - !Ref CallbackURL
         # - "http://localhost:4200/"
