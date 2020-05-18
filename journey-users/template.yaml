@@ -1,0 +1,77 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  CertificateARN:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Users/CertificateARN'
+  DomainName:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Users/DomainName'
+  CallbackURL:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Users/CallbackURL'
+
+Resources:
+  AWSJourneyUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: journey-user-pool
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 6
+          RequireLowercase: false
+          RequireNumbers: false
+          RequireSymbols: false
+          RequireUppercase: false
+      UsernameAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      EmailConfiguration:
+        EmailSendingAccount: COGNITO_DEFAULT
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Mutable: false
+          Required: true
+
+  AWSJourneyPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: journey-pool-client
+      AllowedOAuthFlows:
+        - implicit
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthScopes:
+        - email
+        - openid
+      CallbackURLs:
+        - !Ref CallbackURL
+        # - "http://localhost:4200/"
+      LogoutURLs:
+        - !Ref CallbackURL
+        # - "http://localhost:4200/"
+      RefreshTokenValidity: 30
+      SupportedIdentityProviders:
+        - COGNITO
+      GenerateSecret: false
+      UserPoolId: !Ref AWSJourneyUserPool
+      PreventUserExistenceErrors: ENABLED
+      WriteAttributes:
+        - email
+      ReadAttributes:
+        - email
+
+  AWSJourneyUserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      UserPoolId: !Ref AWSJourneyUserPool
+      Domain: !Ref DomainName
+      CustomDomainConfig:
+        CertificateArn: !Ref CertificateARN
+
+# After deploying new domain, go to App Client Settings -> Choose Domain Name
+# Copy the Alias Target, create new route53 Record Set Type A 
+

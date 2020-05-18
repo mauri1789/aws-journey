@@ -8,7 +8,7 @@ Resources:
   LambdaRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: jn-validator-lambda-role
+      RoleName: journey-validator-lambda-role
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -20,7 +20,7 @@ Resources:
           - sts:AssumeRole
       Path: "/"
       Policies:
-      - PolicyName: jn-validator-lambda-policy
+      - PolicyName: journey-validator-lambda-policy
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -34,7 +34,7 @@ Resources:
   ResourceValidator:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: jn-resource-validator
+      FunctionName: journey-resource-validator
       Runtime: python3.6
       CodeUri: ./build
       Handler: resource_validator.handler

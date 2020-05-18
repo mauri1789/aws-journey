@@ -60,14 +60,9 @@ if [[ $b -eq 1 ]]; then
 fi
 
 if [[ $d -eq 1 ]]; then
-  echo deploy
   aws cloudformation deploy \
     --no-fail-on-empty-changeset \
     --template-file $CF_FILE \
     --stack-name $project \
     --capabilities CAPABILITY_NAMED_IAM
-fi
-
-if [[ $r -eq 1 ]]; then
-  echo remove
 fi
