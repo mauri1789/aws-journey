@@ -73,3 +73,8 @@ Resources:
             RestApiId: !Ref ValidatorAPI
             Path: /credentials
             Method: POST
+
+Outputs:
+  ValidatorAPIEnpoint:
+    Description: "API Prod stage endpoint"
+    Value: !Sub "https://${ValidatorAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/"
