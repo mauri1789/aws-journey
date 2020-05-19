@@ -14,7 +14,7 @@ Parameters:
     Default: '/Journey/Users/CallbackURL'
 
 Resources:
-  AWSJourneyUserPool:
+  UserPool:
     Type: AWS::Cognito::UserPool
     Properties:
       UserPoolName: journey-user-pool
@@ -37,7 +37,7 @@ Resources:
           Mutable: false
           Required: true
 
-  AWSJourneyPoolClient:
+  UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       ClientName: journey-pool-client
@@ -60,20 +60,29 @@ Resources:
       SupportedIdentityProviders:
         - COGNITO
       GenerateSecret: false
-      UserPoolId: !Ref AWSJourneyUserPool
+      UserPoolId: !Ref UserPool
       PreventUserExistenceErrors: ENABLED
       WriteAttributes:
         - email
       ReadAttributes:
         - email
 
-  AWSJourneyUserPoolDomain:
+  UserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
     Properties:
-      UserPoolId: !Ref AWSJourneyUserPool
+      UserPoolId: !Ref UserPool
       Domain: !Ref DomainName
       CustomDomainConfig:
         CertificateArn: !Ref CertificateARN
+
+  UserPoolARNParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: '/Journey/Users/UserPoolARN'
+      Type: String
+      Value: !GetAtt UserPool.Arn
+      Tags:
+        Environment: DEV
 
 # After deploying new domain, go to App Client Settings -> Choose Domain Name
 # Copy the Alias Target, create new route53 Record Set Type A 

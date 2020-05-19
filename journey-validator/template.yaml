@@ -2,7 +2,10 @@ AWSTemplateFormatVersion : '2010-09-09'
 Transform:
   - AWS::Serverless-2016-10-31
 
-Description: Resources that validate students AWS Resources
+Parameters:
+  UserPoolARN:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Users/UserPoolARN'
 
 Resources:
   LambdaRole:
@@ -41,6 +44,11 @@ Resources:
           Name: AWS::Include
           Parameters:
             Location: swagger.yaml
+      Auth:
+        DefaultAuthorizer: CognitoAuthorizer
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !Ref UserPoolARN
 
   ResourceValidator:
     Type: AWS::Serverless::Function
