@@ -3,9 +3,21 @@ Transform:
   - AWS::Serverless-2016-10-31
 
 Parameters:
+  DomainName:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Validator/DomainName'
+  CertificateARN:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Validator/CertificateARN'
+  HostedZoneId:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Global/HostedZoneId'
   UserPoolARN:
     Type: 'AWS::SSM::Parameter::Value<String>'
     Default: '/Journey/Users/UserPoolARN'
+  APIStage:
+    Type: String
+    Default: 'prod'
 
 Resources:
   LambdaRole:
@@ -38,7 +50,7 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       Name: journey-validator-api
-      StageName: prod
+      StageName: !Ref APIStage
       DefinitionBody:
         Fn::Transform:
           Name: AWS::Include
@@ -66,23 +78,52 @@ Resources:
             Path: /validate
             Method: POST
 
-  SaveCredentials:
+  PostCredentials:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: journey-save-credentials
+      FunctionName: journey-post-credentials
       Runtime: python3.6
       CodeUri: ./build
       Handler: save_credentials.handler
       Role: !GetAtt LambdaRole.Arn
       Events:
-        PostSaveCredentials:
+        PostCredentials:
           Type: Api
           Properties:
             RestApiId: !Ref ValidatorAPI
             Path: /credentials
             Method: POST
 
+  CustomDomain:
+    Type: AWS::ApiGateway::DomainName
+    DependsOn: ValidatorAPI
+    Properties:
+      DomainName: !Ref DomainName
+      EndpointConfiguration:
+        Types:
+          - "EDGE"
+      CertificateArn: !Ref CertificateARN
+
+  CustomDomainMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      DomainName: !Ref CustomDomain
+      RestApiId: !Ref ValidatorAPI
+      Stage: !Ref APIStage
+
+  CustomDomainDNS:
+    Type: AWS::Route53::RecordSetGroup
+    DependsOn: CustomDomain
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      RecordSets:
+      - Type: A
+        Name: !Ref DomainName
+        AliasTarget:
+          HostedZoneId: !GetAtt CustomDomain.DistributionHostedZoneId
+          DNSName: !GetAtt CustomDomain.DistributionDomainName
+
 Outputs:
   ValidatorAPIEnpoint:
-    Description: "API Prod stage endpoint"
-    Value: !Sub "https://${ValidatorAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/"
+    Description: "API endpoint"
+    Value: !Sub "https://${ValidatorAPI}.execute-api.${AWS::Region}.amazonaws.com/$(APIStage)/"
