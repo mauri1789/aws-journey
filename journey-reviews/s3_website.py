@@ -7,6 +7,9 @@ def validator():
         public_bucket_policy(s3_bucket),
         website_config(s3_bucket)
     ]
-    return all(test for test in tests)
+    final_status = all(test["success"] for test in tests)
+    errors = [test for test in tests if not test["success"]]
+    
+    return final_status, errors
 
 print(validator())
