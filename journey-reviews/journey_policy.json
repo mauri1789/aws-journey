@@ -1,0 +1,16 @@
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Sid": "AllowGroupToSeeBucketListInTheConsole",
+         "Action": [
+            "s3:ListBucket",
+            "s3:GetBucketWebsite",
+            "s3:GetBucketPolicyStatus",
+            "s3:GetBucketPublicAccessBlock"
+         ],
+         "Effect": "Allow",
+         "Resource": ["arn:aws:s3:::journey-*"]
+      }
+   ]
+}
