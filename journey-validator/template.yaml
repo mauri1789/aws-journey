@@ -9,6 +9,9 @@ Parameters:
   CertificateARN:
     Type: 'AWS::SSM::Parameter::Value<String>'
     Default: '/Journey/Validator/CertificateARN'
+  TableName:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/DB/TableName'
   HostedZoneId:
     Type: 'AWS::SSM::Parameter::Value<String>'
     Default: '/Journey/Global/HostedZoneId'
@@ -48,7 +51,19 @@ Resources:
           - Effect: Allow
             Action:
               - dynamodb:Query
-            Resource: "arn:aws:dynamodb:*:*:table/journey-app-table"
+            Resource:
+              !Join
+                - '/'
+                - - 'arn:aws:dynamodb:*:*:table'
+                  - !Ref TableName
+          - Effect: Allow
+            Action:
+              - sqs:GetQueueAttributes
+              - sqs:ReceiveMessage
+              - sqs:DeleteMessage
+              - sqs:GetQueueUrl
+              - sqs:SendMessage
+            Resource: !GetAtt ResourceValidatorQueue.Arn
 
   ValidatorAPI:
     Type: AWS::Serverless::Api
@@ -66,6 +81,27 @@ Resources:
           CognitoAuthorizer:
             UserPoolArn: !Ref UserPoolARN
 
+  ResourceValidatorQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: journey-resource-validator-queue
+
+  ResourceValidator:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-resource-validator
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: resource_validator.handler
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        ResourceQueue:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt ResourceValidatorQueue.Arn
+            BatchSize: 5
+            Enabled: True
+
   StepValidator:
     Type: AWS::Serverless::Function
     Properties:
@@ -81,6 +117,10 @@ Resources:
             RestApiId: !Ref ValidatorAPI
             Path: /validate
             Method: POST
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+          QUEUE_NAME: !GetAtt ResourceValidatorQueue.QueueName
 
   PostCredentials:
     Type: AWS::Serverless::Function

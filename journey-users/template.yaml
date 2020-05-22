@@ -81,8 +81,6 @@ Resources:
       Name: '/Journey/Users/UserPoolARN'
       Type: String
       Value: !GetAtt UserPool.Arn
-      Tags:
-        Environment: DEV
 
 # After deploying new domain, go to App Client Settings -> Choose Domain Name
 # Copy the Alias Target, create new route53 Record Set Type A 

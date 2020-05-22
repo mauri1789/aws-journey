@@ -26,4 +26,9 @@ Resources:
           AttributeName: "sk"
           KeyType: "RANGE"
 
-
+  JourneyTableNameParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: '/Journey/DB/TableName'
+      Type: String
+      Value: !Ref JourneyAppTable
