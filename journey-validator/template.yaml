@@ -45,6 +45,10 @@ Resources:
             - logs:CreateLogStream
             - logs:PutLogEvents
             Resource: arn:aws:logs:*:*:*
+          - Effect: Allow
+            Action:
+              - dynamodb:Query
+            Resource: "arn:aws:dynamodb:*:*:table/journey-app-table"
 
   ValidatorAPI:
     Type: AWS::Serverless::Api
@@ -62,13 +66,13 @@ Resources:
           CognitoAuthorizer:
             UserPoolArn: !Ref UserPoolARN
 
-  ResourceValidator:
+  StepValidator:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: journey-resource-validator
+      FunctionName: journey-step-validator
       Runtime: python3.6
       CodeUri: ./build
-      Handler: resource_validator.handler
+      Handler: step_validator.handler
       Role: !GetAtt LambdaRole.Arn
       Events:
         PostValidator:

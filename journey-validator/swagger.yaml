@@ -1,7 +1,7 @@
 openapi: 3.0.0
 
 paths:
-  /validator:
+  /validate:
     post:
       requestBody:
         required: true
@@ -13,7 +13,7 @@ paths:
       x-amazon-apigateway-integration:
         type: "aws_proxy"
         uri:
-          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:journey-resource-validator/invocations"
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:journey-step-validator/invocations"
         httpMethod: "POST"
         responses:
           default:
@@ -172,3 +172,5 @@ components:
           type: string
         lab:
           type: string
+        user_input:
+          type: object
