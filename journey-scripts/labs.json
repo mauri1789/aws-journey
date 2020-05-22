@@ -1,0 +1,26 @@
+{
+    "S3_static_website": {
+        "lab_id": "lab-S3_static_website",
+        "label": "S3 Static Website",
+        "user_input": ["S3_bucket"],
+        "resources": [],
+        "steps": [{
+            "description": "S3 Static Website config tests",
+            "input": ["S3_bucket"],
+            "tests": [
+                {
+                    "file": "services/s3",
+                    "function": "public_access_block_config"
+                },
+                {
+                    "file": "services/s3",
+                    "function": "public_bucket_policy"
+                },
+                {
+                    "file": "services/s3",
+                    "function": "website_config"
+                }
+            ]
+        }]
+    }
+}
