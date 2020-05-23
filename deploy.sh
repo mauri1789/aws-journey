@@ -1,7 +1,7 @@
 #!/bin/bash
 
-OPTIONS=p:ibdrw
-LONGOPTS=project,install,build,deploy,remove,website
+OPTIONS=p:ibdrwf
+LONGOPTS=project,install,build,deploy,remove,website,files
 
 ! PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name "$0" -- "$@")
 
@@ -34,6 +34,10 @@ case "$3" in
     d=1
     shift
     ;;
+  -f|--files)
+    f=1
+    shift
+    ;;
   -w|--website)
     w=1
     shift
@@ -49,6 +53,10 @@ esac
 if [[ $i -eq 1 ]]; then
   mkdir -p build
   cp -r src/* build/
+fi
+
+if [[ $f -eq 1 ]]; then
+  cp -r ../journey-reviews/* build/
 fi
 
 if [[ $b -eq 1 ]]; then

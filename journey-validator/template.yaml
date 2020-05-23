@@ -51,6 +51,7 @@ Resources:
           - Effect: Allow
             Action:
               - dynamodb:Query
+              - dynamodb:GetItem
             Resource:
               !Join
                 - '/'
@@ -101,6 +102,9 @@ Resources:
             Queue: !GetAtt ResourceValidatorQueue.Arn
             BatchSize: 5
             Enabled: True
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
 
   StepValidator:
     Type: AWS::Serverless::Function

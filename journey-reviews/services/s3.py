@@ -1,10 +1,11 @@
-import boto3
-from .common import check_status
+from services.common import check_status
 from botocore.exceptions import ClientError
 
-s3 = boto3.client('s3')
+s3_bucket = "S3_bucket"
 
-def public_access_block_config(bucket):
+def public_access_block_config(user_session, data):
+    bucket = data[s3_bucket]
+    s3 = user_session.client('s3')
     try:
         access = s3.get_public_access_block(Bucket=bucket)
     except ClientError as error:
@@ -19,7 +20,9 @@ def public_access_block_config(bucket):
         message= "some access configurations are blocking public access"
     return check_status(all_public, message)
 
-def public_bucket_policy(bucket):
+def public_bucket_policy(user_session, data):
+    bucket = data[s3_bucket]
+    s3 = user_session.client('s3')
     try:
         status = s3.get_bucket_policy_status(Bucket=bucket)
     except ClientError as error:
@@ -36,7 +39,9 @@ def public_bucket_policy(bucket):
     
     return check_status(public_policy, message)
 
-def website_config(bucket):
+def website_config(user_session, data):
+    bucket = data[s3_bucket]
+    s3 = user_session.client('s3')
     try:
         s3.get_bucket_website(Bucket=bucket)
     except ClientError as error:

@@ -19,11 +19,16 @@ def handler(event, context):
     user_input = body["user_input"]
     
     steps = get_lab_data(lab)
-    
+
     queue_entries = [
         {
             "Id": str(uuid.uuid4()),
-            "MessageBody": step
+            "MessageBody": json.dumps({
+                "user": user_id,
+                "lab": lab,
+                "step": step,
+                "user_input": user_input
+            })
         } for step in steps
     ]
     

@@ -9,16 +9,16 @@
             "input": ["S3_bucket"],
             "tests": [
                 {
-                    "file": "services/s3",
-                    "function": "public_access_block_config"
+                    "method": "services.s3.public_access_block_config",
+                    "description": "Public access block configuration"
                 },
                 {
-                    "file": "services/s3",
-                    "function": "public_bucket_policy"
+                    "method": "services.s3.public_bucket_policy",
+                    "description": "Public bucket policy configuration"
                 },
                 {
-                    "file": "services/s3",
-                    "function": "website_config"
+                    "method": "services.s3.website_config",
+                    "description": "Static website configuration"
                 }
             ]
         }]
