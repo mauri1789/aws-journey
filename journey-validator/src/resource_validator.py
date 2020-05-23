@@ -2,8 +2,8 @@ import os
 import boto3
 import json
 import importlib
+from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key, Attr
-
 
 dynamodb = boto3.resource('dynamodb')
 
@@ -19,13 +19,33 @@ def handler(event, context):
         user = body["user"]
         step = body["step"]
         lab = body["lab"]
-        user_input = body["user_input"]
-        
-        user_session = get_user_session(user)
-        
-        tests = get_tests(step)
-        tests, response = process_tests(tests, user_session, user_input)
-        
+        execution = {
+            "pk": f"execution-{user.split('-')[-1]}-{lab.split('-')[-1]}",
+            "sk": step
+        }
+        try:
+            user_input = body["user_input"]
+            
+            user_session = get_user_session(user)
+            
+            tests = get_tests(step)
+            tests, response = process_tests(tests, user_session, user_input)
+            
+            execution["tests"] = tests
+            execution["success"] = response["success"]
+            print({"execution": execution})
+            
+            db_response = journey_table.put_item(Item=execution)
+            print({"db_response": db_response})
+            
+        except ClientError as error:
+            execution["error"] = error
+            execution["success"] = False
+            print({"execution": execution})
+            
+            db_response = journey_table.put_item(Item=execution)
+            print({"db_response": db_response})
+            raise error
     return {
         "statusCode": 200,
         "body": json.dumps(response)
@@ -61,11 +81,14 @@ def get_tests(step):
 def process_tests(tests, user_session, user_input):
     response = {"success": True}
     for test in tests:
-            method_exec = run_str_method(test["method"], user_session, user_input)
-            test["success"] = method_exec["success"]
-            if not method_exec["success"]:
-                response = method_exec
-                break
+        method_exec = run_str_method(test["method"], user_session, user_input)
+        test["success"] = method_exec["success"]
+        if not method_exec["success"]:
+            response = method_exec
+            break
+    for test in tests:
+        del test["method"]
+        del test["mappings"]
     return tests, response
 
 def run_str_method(path, user_session, data):

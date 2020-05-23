@@ -52,6 +52,7 @@ Resources:
             Action:
               - dynamodb:Query
               - dynamodb:GetItem
+              - dynamodb:PutItem
             Resource:
               !Join
                 - '/'

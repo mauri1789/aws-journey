@@ -2,8 +2,8 @@ import json
 
 def handler(event, context):
     records = event["Records"]
+    print(event)
     for record in records:
-        print(record)
         response = json.loads(record["body"])
     
     return {

@@ -6,6 +6,9 @@ import copy
 dynamodb = boto3.resource('dynamodb')
 journey_table = dynamodb.Table('journey-app-table')
 
+def get_random_num():
+    return '.'.join(str(uuid.uuid4())[-17:].split('-'))
+
 def add_lab_to_dynamo(lab):
     with open("journey-scripts/labs.json") as labs:
         all_labs = json.load(labs)
@@ -19,7 +22,7 @@ def add_lab_to_dynamo(lab):
     steps=[]
     tests=[]
     for step in lab["steps"]:
-        step_id = f"step-{str(uuid.uuid4())[-17:]}"
+        step_id = f"step-{get_random_num()}"
         lab_step = {
             "pk": lab["lab_id"],
             "sk": step_id,
@@ -35,9 +38,9 @@ def add_lab_to_dynamo(lab):
         step_tests = [
             {
                 "pk": step_id,
-                "sk":f"test-{str(uuid.uuid4())[-17:]}",
-                "file": test["file"],
-                "function": test["function"],
+                "sk":f"test-{get_random_num()}",
+                "description": test["description"],
+                "method": test["method"],
                 "mappings": test.get("mappings")
             }
             for test in step["tests"]]
@@ -51,4 +54,5 @@ def add_lab_to_dynamo(lab):
                 Item=record
             )
     print(all_records)
+    
 add_lab_to_dynamo("S3_static_website")
