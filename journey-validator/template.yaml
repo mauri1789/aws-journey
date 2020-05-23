@@ -64,7 +64,16 @@ Resources:
               - sqs:DeleteMessage
               - sqs:GetQueueUrl
               - sqs:SendMessage
-            Resource: !GetAtt ResourceValidatorQueue.Arn
+            Resource:
+              - !GetAtt ResourceValidatorQueue.Arn
+          - Effect: Allow
+            Action:
+              - sqs:GetQueueAttributes
+              - sqs:ReceiveMessage
+              - sqs:DeleteMessage
+              - sqs:GetQueueUrl
+            Resource:
+              - !GetAtt ResourceValidatorDLQ.Arn
 
   ValidatorAPI:
     Type: AWS::Serverless::Api
@@ -82,10 +91,19 @@ Resources:
           CognitoAuthorizer:
             UserPoolArn: !Ref UserPoolARN
 
+  ResourceValidatorDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: journey-resource-validator-dlq
+      MessageRetentionPeriod: 300
+
   ResourceValidatorQueue:
     Type: AWS::SQS::Queue
     Properties:
       QueueName: journey-resource-validator-queue
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt ResourceValidatorDLQ.Arn
+        maxReceiveCount: 2
 
   ResourceValidator:
     Type: AWS::Serverless::Function
@@ -105,6 +123,22 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref TableName
+
+  ResourceValidatorDLQFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-resource-validator-dlq-function
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: dlq_resource_validator.handler
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        ResourceQueue:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt ResourceValidatorDLQ.Arn
+            BatchSize: 5
+            Enabled: True
 
   StepValidator:
     Type: AWS::Serverless::Function
