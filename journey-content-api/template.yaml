@@ -1,0 +1,143 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  DomainName:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/ContentAPI/DomainName'
+  CertificateARN:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/ContentAPI/CertificateARN'
+  TableName:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/DB/TableName'
+  HostedZoneId:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Global/HostedZoneId'
+  UserPoolARN:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/Journey/Users/UserPoolARN'
+  APIStage:
+    Type: String
+    Default: 'prod'
+
+Resources:
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: journey-content-api-lambda-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName: journey-content-api-lambda-policy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource: arn:aws:logs:*:*:*
+          - Effect: Allow
+            Action:
+              - dynamodb:Query
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+            Resource:
+              !Join
+                - '/'
+                - - 'arn:aws:dynamodb:*:*:table'
+                  - !Ref TableName
+
+  ContentAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: journey-content-api
+      StageName: !Ref APIStage
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: swagger.yaml
+      Auth:
+        DefaultAuthorizer: CognitoAuthorizer
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !Ref UserPoolARN
+
+  GetLab:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-get-lab
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: lab.get
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        GetLab:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ContentAPI
+            Path: /lab/{lab}
+            Method: GET
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+
+  GetSection:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-get-section
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: section.get
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        GetSection:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ContentAPI
+            Path: /section/{section}
+            Method: GET
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+
+  CustomDomain:
+    Type: AWS::ApiGateway::DomainName
+    DependsOn: ContentAPI
+    Properties:
+      DomainName: !Ref DomainName
+      EndpointConfiguration:
+        Types:
+          - "EDGE"
+      CertificateArn: !Ref CertificateARN
+
+  CustomDomainMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      DomainName: !Ref CustomDomain
+      RestApiId: !Ref ContentAPI
+      Stage: !Ref APIStage
+
+  CustomDomainDNS:
+    Type: AWS::Route53::RecordSetGroup
+    DependsOn: CustomDomain
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      RecordSets:
+      - Type: A
+        Name: !Ref DomainName
+        AliasTarget:
+          HostedZoneId: !GetAtt CustomDomain.DistributionHostedZoneId
+          DNSName: !GetAtt CustomDomain.DistributionDomainName

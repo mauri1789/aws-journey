@@ -36,8 +36,8 @@ def add_sections():
         section_record = {
             "pk": lab_id,
             "sk": section_id,
-            "Title": section["Title"],
-            "Description": section.get("Description")
+            "title": section["Title"],
+            "description": section.get("Description")
         }
         section_records.append(section_record)
         
