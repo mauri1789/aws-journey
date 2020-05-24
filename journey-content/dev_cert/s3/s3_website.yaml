@@ -1,0 +1,87 @@
+
+Lab: S3_static_website
+Sections:
+  - Title: Create a S3 bucket
+    Description: Create a S3 bucket with unblocked public access protections.
+    Id: 92ec.3d3636f6cc97
+    Steps:
+      - Text: >
+          Open the AWS S3 Console
+      - Text: >
+          Click on Create Bucket
+      - Text: >
+          Enter a name for the bucket, make sure it starts with [@journey-@]
+          in order to use the Lab Test Feature
+      - Text: >
+          Deselect [-Block all public access-] checkbox
+        Comments: >
+          By default and following best practices, S3 buckets are blocked from
+          public access. That means you can't create public objects. Unchecking
+          [-Block all public access-] will allow you to create public objects,
+          it will not make your bucket or your objects public.
+      - Text: >
+          Select the checkbox [-I acknowledge that the current settings might
+          result in this bucket and the objects within becoming public.-]
+      - Text: >
+          Hit [@Create bucket@]
+      - Text: >
+          Go back to the AWS S3 console. Make sure your bucket is listed there.
+          Notice in Access column it displays [-Objects can be public-]
+  - Title: Add a bucket policy
+    Description: Make your objects public with a bucket policy
+    Id: 998f.ebcdd641109a
+    Steps:
+      - Text: >
+          Go to [@Permissions@] tab and select [@Bucket policy@]
+      - Text: >
+          Copy this code there, make sure to replace the bucket name in this code
+          to your bucket's name
+        Code: "dev_cert/s3/files/public_bucket_policy.json"
+        Comments: >
+          This bucket policy will make your bucket objects public. So anyone with
+          the right link will be able to access it, this is good for public websites.
+      - Text: >
+          Click [@Save@], notice Permissions tab will have a public tag in it
+  - Title: Add the web app files
+    Id: a536.738ea0fb192e
+    Steps:
+      - Text: >
+          Go to [@Overview@] tab
+      - Text: >
+          Select [@Upload@]
+      - Text: >
+          Upload index.html
+        Code: "dev_cert/s3/files/index.html"
+        Comments: >
+          index.html is the file that will be loaded when people visit your site
+      - Text: >
+          Upload error.html
+        Code: "dev_cert/s3/files/error.html"
+        Comments: >
+          error.html is the file that will be loaded if there is any error
+  - Title: Static website configuration
+    Id: a76f.917f0107f690
+    Description: Configure your bucket as a static website
+    Steps:
+      - Text: >
+          Select [@Properties@] tab and click on [@static web hosting@] option
+      - Text: >
+          Check the box [-Use this bucket to host a website-]
+      - Text: >
+          Fill the next boxes:
+        List:
+          - "Index Document: index.html"
+          - "Error Document: error.html"
+      - Text: >
+          Hit [@Save@]
+      - Text: >
+          Select [@static web hosting@] option again and open the link that is
+          displayed, you should see your 
+      - Text: >
+          Add a path to your link and reload it, something like
+          [-http://journey-bucket.s3-website.us-east-2.amazonaws.com/somethingElse-].
+          Check that the error page is displayed.
+        Comments: >
+          Since you haven't configured routes of any kind, this url will throw an
+          error.
+    
