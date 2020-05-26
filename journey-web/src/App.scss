@@ -1,0 +1,28 @@
+$header-height:70px;
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: lightyellow;
+  .header-cont{
+    flex: 0 0 $header-height;
+    & > .header {
+      height: $header-height;
+    }
+  }
+  .app-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 0;
+    background-color: lightgreen;
+    .content {
+      flex: 1 0 0;
+      background-color: lightgreen;
+    }
+    .footer {
+      flex: 0 0 70px;
+      background-color: lightcoral;
+    }
+  }
+}
