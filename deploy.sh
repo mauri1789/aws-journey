@@ -74,3 +74,9 @@ if [[ $d -eq 1 ]]; then
     --stack-name $project \
     --capabilities CAPABILITY_NAMED_IAM
 fi
+
+if [[ $w -eq 1 ]]; then
+  npm install
+  npm run build --prod --aot
+	aws s3 cp build s3://mauridev.net/ --recursive
+fi
