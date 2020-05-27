@@ -10,10 +10,27 @@ import {
 function Header() {
     return (
       <div className="header">
-        hi world
+        <div className="logo-cont">
+          logo
+        </div>
+        <div className="nav-cont">
+          nav-cont
+        </div>
+        <div className="user-buttons">
+          <HeaderButton text="Signup" />
+        </div>
       </div>
     );
   }
+interface HeaderButtonProps {text: string}
+function HeaderButton({text}:HeaderButtonProps) {
+
+  return (
+    <div className="header-button">
+        {text}
+    </div>
+  )
+}
   
   export default Header;
   
