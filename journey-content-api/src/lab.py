@@ -1,6 +1,7 @@
 import os
 import json
 import boto3
+from journey_requests import web_response
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key, Attr
 
@@ -20,10 +21,7 @@ def get(event, context):
         "lab": lab_record
     }
     
-    return {
-        "statusCode": 200,
-        "body": json.dumps(response)
-    }
+    return web_response(200, response)
 
 def get_lab(lab):
     lab_data = journey_table.query(
