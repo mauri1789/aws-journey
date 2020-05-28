@@ -52,6 +52,7 @@ esac
 
 if [[ $i -eq 1 ]]; then
   mkdir -p build
+  cp -r ../journey-lib/* build/
   cp -r src/* build/
 fi
 
@@ -73,4 +74,10 @@ if [[ $d -eq 1 ]]; then
     --template-file $CF_FILE \
     --stack-name $project \
     --capabilities CAPABILITY_NAMED_IAM
+fi
+
+if [[ $w -eq 1 ]]; then
+  npm install
+  npm run build --prod --aot
+	aws s3 cp build s3://mauridev.net/ --recursive
 fi

@@ -2,6 +2,7 @@ import os
 import boto3
 import json
 import importlib
+from journey_requests import web_response
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key, Attr
 
@@ -46,10 +47,7 @@ def handler(event, context):
             db_response = journey_table.put_item(Item=execution)
             print({"db_response": db_response})
             raise error
-    return {
-        "statusCode": 200,
-        "body": json.dumps(response)
-    }
+    return web_response(200, response)
 
 def get_user_session(user):
     credentials = journey_table.get_item(

@@ -1,4 +1,5 @@
 import json
+from journey_requests import web_response
 
 def handler(event, context):
     records = event["Records"]
@@ -6,7 +7,4 @@ def handler(event, context):
     for record in records:
         response = json.loads(record["body"])
     
-    return {
-        "statusCode": 200,
-        "body": json.dumps(response)
-    }
+    return web_response(200, response)
