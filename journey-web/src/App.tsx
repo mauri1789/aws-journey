@@ -23,7 +23,7 @@ function App() {
         <div className="app-body">
           <div className="content">
             <Switch>
-              <Route path="/lab/:lab">
+              <Route path="/lab/:lab_id">
                 <Lab />
               </Route>
               <Route path="/topic/:topic">
