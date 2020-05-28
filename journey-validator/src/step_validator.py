@@ -2,6 +2,7 @@ import os
 import json
 import uuid
 import boto3
+from journey_requests import web_response
 from boto3.dynamodb.conditions import Key, Attr
 
 table = os.getenv('TABLE_NAME')
@@ -34,10 +35,7 @@ def handler(event, context):
     
     journey_queue.send_messages(Entries=queue_entries)
     
-    return {
-        "statusCode": 200,
-        "body": json.dumps({"queue_entries": queue_entries})
-    }
+    return web_response(200, queue_entries)
 
 def get_lab_data(lab):
     lab_data = journey_table.query(

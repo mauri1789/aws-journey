@@ -1,8 +1,6 @@
 import boto3
 import json
+from journey_requests import web_response
 
 def handler(event, context):
-    return {
-        "statusCode": 200,
-        "body": json.dumps("lambda :)")
-    }
+    return web_response(200, {"hi": "world"})

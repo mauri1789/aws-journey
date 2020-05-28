@@ -52,6 +52,7 @@ esac
 
 if [[ $i -eq 1 ]]; then
   mkdir -p build
+  cp -r ../journey-lib/* build/
   cp -r src/* build/
 fi
 

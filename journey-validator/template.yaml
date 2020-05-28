@@ -86,11 +86,11 @@ Resources:
           Name: AWS::Include
           Parameters:
             Location: swagger.yaml
-      Auth:
-        DefaultAuthorizer: CognitoAuthorizer
-        Authorizers:
-          CognitoAuthorizer:
-            UserPoolArn: !Ref UserPoolARN
+      # Auth:
+      #   DefaultAuthorizer: CognitoAuthorizer
+      #   Authorizers:
+      #     CognitoAuthorizer:
+      #       UserPoolArn: !Ref UserPoolARN
 
   ResourceValidatorDLQ:
     Type: AWS::SQS::Queue
