@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Lab.scss';
 import {journey_url} from '../../Project';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faCoffee,
+  faCaretRight
+} from '@fortawesome/free-solid-svg-icons'
 import {
   useParams
 } from "react-router-dom";
@@ -11,9 +16,12 @@ interface Section {
   title: string;
   description: string;
 }
+interface Lab {
+  description: string;
+}
 
 function Lab() {
-  const [lab, setLab] = useState();
+  const [lab, setLab] = useState<Lab>();
   let [sections, setSections] = useState<Section[]>([]);
   useEffect(() => {
     let get_journey = async () => {
@@ -26,14 +34,23 @@ function Lab() {
   },[])
 
   let section_group = sections.map((section) => 
-    <div>{section!.title}</div>
+    <div className="section">
+      <div className="section-header">
+        <div className="section-open">
+          <FontAwesomeIcon icon={faCaretRight} />
+        </div>
+        <div className="section-title">
+          {section!.title}
+        </div>
+      </div>
+    </div>
   )
 
   let {lab_id, topic_id} = useParams()
     return (
       <div className="lab">
         <h1>S3 Static Website</h1>
-        <p>Static websites are a great addition to your web toolkit</p>
+        <p>{lab?.description}</p>
         <div className="sections">
           {section_group}
         </div>
