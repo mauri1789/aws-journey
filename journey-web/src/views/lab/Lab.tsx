@@ -4,7 +4,6 @@ import './Lab.scss';
 import {journey_url} from '../../Project';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faCoffee,
   faCaretRight
 } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -12,12 +11,12 @@ import {
 } from "react-router-dom";
 
 interface ISection {
-  section: string;
-  title: string;
-  description: string;
+  section: string
+  title: string
+  description: string
 }
 interface ILab {
-  description: string;
+  description: string
 }
 
 function Lab() {
@@ -47,8 +46,8 @@ function Lab() {
    );
 }
 interface ISectionProps {
-   section: ISection;
-   index: number;
+   section: ISection
+   index: number
 }
 function Section ({section, index}:ISectionProps) {
    const first_section = (index==0)?true:false
@@ -60,12 +59,15 @@ function Section ({section, index}:ISectionProps) {
             title={section!.title}
             toggleSection={toggleSection}
          />
+         {sectionOpen &&
+            <SectionContent description={section.description} />
+         }
       </div>
    )
 }
 
 interface ISectionHeaderProps {
-   title: string;
+   title: string
    toggleSection: () => void
 }
 function SectionHeader ({title, toggleSection}:ISectionHeaderProps) {
@@ -80,9 +82,15 @@ function SectionHeader ({title, toggleSection}:ISectionHeaderProps) {
       </div>
    )
 }
-
-
-
-
+interface ISectionContentProps {
+   description: string;
+}
+function SectionContent ({description}: ISectionContentProps) {
+   return (
+      <div className="section-content">
+         {description}
+      </div>
+   )
+}
 
 export default Lab;
