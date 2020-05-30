@@ -3,7 +3,7 @@ import Header from './views/Header';
 import Landing from './views/landing/Landing';
 import Journey from './views/journey/Journey';
 import Topic from './views/topic/Topic';
-import Lab from './views/lab/Lab';
+import { Lab } from './views/lab/Lab';
 import './App.scss';
 import {
   BrowserRouter as Router,

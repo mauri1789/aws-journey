@@ -12,11 +12,12 @@ interface ILab {
 }
 
 function Lab() {
+   let {lab_id, topic_id} = useParams()
    const [lab, setLab] = useState<ILab>();
    let [sections, setSections] = useState<ISection[]>([]);
    useEffect(() => {
       let get_journey = async () => {
-         let response = await axios.get(journey_url('content', 'lab/S3_static_website'))
+         let response = await axios.get(journey_url('content', `lab/${lab_id}`))
          let { data } = response;
          setLab(data["lab"])
          setSections(data["sections"])
@@ -24,7 +25,6 @@ function Lab() {
       get_journey();
    },[])
 
-   let {lab_id, topic_id} = useParams()
    return (
       <div className="lab">
          <h1>S3 Static Website</h1>
@@ -38,4 +38,4 @@ function Lab() {
    );
 }
 
-export default Lab;
+export { Lab }
