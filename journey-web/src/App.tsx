@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import Header from './views/Header';
 import Landing from './views/landing/Landing';
 import Journey from './views/journey/Journey';

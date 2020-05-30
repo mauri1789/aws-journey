@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Lab.scss';
-import {journey_url} from '../../Project';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faCaretRight
-} from '@fortawesome/free-solid-svg-icons'
+import { journey_url } from '../../Project';
+import { Section, ISection } from './sections/Section';
 import {
   useParams
 } from "react-router-dom";
 
-interface ISection {
-  section: string
-  title: string
-  description: string
-}
 interface ILab {
   description: string
 }
@@ -44,53 +36,6 @@ function Lab() {
          </div>
       </div>
    );
-}
-interface ISectionProps {
-   section: ISection
-   index: number
-}
-function Section ({section, index}:ISectionProps) {
-   const first_section = (index==0)?true:false
-   const [sectionOpen, setSectionOpen] = useState<boolean>(first_section);
-   let toggleSection = () => setSectionOpen(!sectionOpen)
-   return (
-      <div className="section">
-         <SectionHeader
-            title={section!.title}
-            toggleSection={toggleSection}
-         />
-         {sectionOpen &&
-            <SectionContent description={section.description} />
-         }
-      </div>
-   )
-}
-
-interface ISectionHeaderProps {
-   title: string
-   toggleSection: () => void
-}
-function SectionHeader ({title, toggleSection}:ISectionHeaderProps) {
-   return (
-      <div className="section-header">
-         <div className="section-open" onClick={toggleSection}>
-            <FontAwesomeIcon icon={faCaretRight} />
-         </div>
-         <div className="section-title" onClick={toggleSection}>
-            {title}
-         </div>
-      </div>
-   )
-}
-interface ISectionContentProps {
-   description: string;
-}
-function SectionContent ({description}: ISectionContentProps) {
-   return (
-      <div className="section-content">
-         {description}
-      </div>
-   )
 }
 
 export default Lab;
