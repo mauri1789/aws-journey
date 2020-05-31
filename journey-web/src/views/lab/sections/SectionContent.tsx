@@ -1,4 +1,5 @@
 import React from 'react'
+import './SectionContent.scss';
 
 interface ISectionContentProps {
     description: string;

@@ -3,23 +3,5 @@
     .sections {
         display: flex;
         flex-direction: column;
-        .section {
-            .section-header {
-                display: flex;
-                .section-open {
-                    cursor: pointer;
-                    flex: 0 0 20px;
-                    font-size: 20px;
-                    text-align: center;
-                }
-                .section-title {
-                    cursor: pointer;
-                    background-color: lightblue;
-                }
-            }
-            .section-content {
-                
-            }
-        }
     }
 }
