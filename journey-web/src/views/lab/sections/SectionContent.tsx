@@ -44,7 +44,19 @@ function SectionContentC ({
     return (
       <div className="section-content">
          {description}
-         {JSON.stringify(steps)}
+         <div className="steps">
+            {steps.map((step, index) => 
+               <div className="step" key={index}>
+                  <div className="step-index">
+                     {index+1}.
+                  </div>
+                  <div className="step-content">
+                     {step.text}
+                  </div>
+                   
+               </div>
+            )}
+         </div>
       </div>
     )
 }
