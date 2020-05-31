@@ -9,6 +9,7 @@ export interface Step {
 
 export interface Section {
    section_id?: string
+   title?: string
    description: string
    steps?: Step[]
 }

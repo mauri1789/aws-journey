@@ -3,7 +3,7 @@ import Header from './views/Header';
 import Landing from './views/landing/Landing';
 import Journey from './views/journey/Journey';
 import Topic from './views/topic/Topic';
-import { Lab } from './views/lab/Lab';
+import { LabComponent } from './views/lab/Lab';
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import './App.scss';
@@ -26,7 +26,7 @@ function App() {
             <div className="content">
               <Switch>
                 <Route path="/lab/:topic_id/:lab_id">
-                  <Lab />
+                  <LabComponent />
                 </Route>
                 <Route path="/topic/:topic">
                   <Topic />
