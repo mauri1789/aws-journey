@@ -4,6 +4,8 @@ import Landing from './views/landing/Landing';
 import Journey from './views/journey/Journey';
 import Topic from './views/topic/Topic';
 import { Lab } from './views/lab/Lab';
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -14,34 +16,36 @@ import {
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <div className="header-cont">
-          <Header />
-        </div>
-        <div className="app-body">
-          <div className="content">
-            <Switch>
-              <Route path="/lab/:topic_id/:lab_id">
-                <Lab />
-              </Route>
-              <Route path="/topic/:topic">
-                <Topic />
-              </Route>
-              <Route path="/journey/:journey">
-                <Journey />
-              </Route>
-              <Route path="/">
-                <Landing />
-              </Route>
-            </Switch>            
+    <Provider store={store}>
+      <Router>
+        <div className="app">
+          <div className="header-cont">
+            <Header />
           </div>
-          <div className="footer">
-            this is footer
+          <div className="app-body">
+            <div className="content">
+              <Switch>
+                <Route path="/lab/:topic_id/:lab_id">
+                  <Lab />
+                </Route>
+                <Route path="/topic/:topic">
+                  <Topic />
+                </Route>
+                <Route path="/journey/:journey">
+                  <Journey />
+                </Route>
+                <Route path="/">
+                  <Landing />
+                </Route>
+              </Switch>            
+            </div>
+            <div className="footer">
+              this is footer
+            </div>
           </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </Provider>
   );
 }
 

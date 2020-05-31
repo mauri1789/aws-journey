@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Lab.scss';
 import { journey_url } from '../../Project';
-import { Section, ISection } from './sections/Section';
+import { SectionComponent, ISection } from './sections/Section';
 import {
   useParams
 } from "react-router-dom";
@@ -31,7 +31,7 @@ function Lab() {
          <p>{lab?.description}</p>
          <div className="sections">
             {sections.map((section, index) =>
-               <Section section={section} index={index} key={index} />
+               <SectionComponent section={section} index={index} key={index} />
             )}
          </div>
       </div>
