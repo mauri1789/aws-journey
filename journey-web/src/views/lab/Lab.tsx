@@ -14,15 +14,15 @@ interface ILab {
 function Lab() {
    let {lab_id, topic_id} = useParams()
    const [lab, setLab] = useState<ILab>();
-   let [sections, setSections] = useState<ISection[]>([]);
+   const [sections, setSections] = useState<ISection[]>([]);
    useEffect(() => {
-      let get_journey = async () => {
+      let get_lab = async () => {
          let response = await axios.get(journey_url('content', `lab/${lab_id}`))
          let { data } = response;
          setLab(data["lab"])
          setSections(data["sections"])
       }
-      get_journey();
+      get_lab();
    },[])
 
    return (
