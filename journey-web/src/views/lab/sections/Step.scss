@@ -1,0 +1,13 @@
+.step {
+    display: flex;
+    margin-bottom: 10px;
+    .step-index {
+        flex: 0 0 20px;
+        text-align: right;
+        padding-right: 10px;
+        font-weight: bold;
+    }
+    .step-content {
+        flex: 1 0 0;
+    }
+}

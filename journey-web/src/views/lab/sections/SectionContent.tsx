@@ -8,6 +8,7 @@ import { Section } from '../../../redux/types/sections';
 import { AppActions } from '../../../redux/types/actions';
 import { addSteps } from '../../../redux/actions/sections';
 import { Step } from '../../../redux/types/sections';
+import { StepComponent } from './Step';
 
 interface SectionContentProps {
    description: string;
@@ -46,15 +47,7 @@ function SectionContentC ({
          {description}
          <div className="steps">
             {steps.map((step, index) => 
-               <div className="step" key={index}>
-                  <div className="step-index">
-                     {index+1}.
-                  </div>
-                  <div className="step-content">
-                     {step.text}
-                  </div>
-                   
-               </div>
+               <StepComponent step={step} index={index} key={index} />
             )}
          </div>
       </div>
