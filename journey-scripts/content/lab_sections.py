@@ -26,7 +26,8 @@ def add_sections():
     lab_id = f"lab-{lab['Lab']}"
     lab_record = {
         "pk": lab_id,
-        "sk": lab_id
+        "sk": lab_id,
+        "description": lab["Description"]
     }
     all_records = []
     all_records.append(lab_record)
@@ -47,7 +48,7 @@ def add_sections():
           "text": step["Text"],
           "comments": step.get("Comments"),
           "list": step.get("List"),
-          "code": step.get("Code"),
+          "code": convertFile(step.get("Code")),
           "code_url": step.get("CodeUrl")
         } for index, step in enumerate(section["Steps"])]
         
@@ -57,5 +58,13 @@ def add_sections():
     
     add_to_db(all_records)
         
+def convertFile(location):
+    text = None
+    if location is not None:
+        with open(location) as file:
+            text = file.read()
+    return text
 
 add_sections()
+
+

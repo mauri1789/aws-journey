@@ -1,5 +1,8 @@
 
 Lab: S3_static_website
+Description: >
+  In this lab you'll create a simple static website using S3. With S3, having a
+  website is only about having the right configurations and permissions.
 Sections:
   - Title: Create a S3 bucket
     Description: Create a S3 bucket with unblocked public access protections.
@@ -36,7 +39,7 @@ Sections:
       - Text: >
           Copy this code there, make sure to replace the bucket name in this code
           to your bucket's name
-        Code: "dev_cert/s3/files/public_bucket_policy.json"
+        Code: "journey-content/dev_cert/s3/files/public_bucket_policy.json"
         Comments: >
           This bucket policy will make your bucket objects public. So anyone with
           the right link will be able to access it, this is good for public websites.
@@ -51,12 +54,12 @@ Sections:
           Select [@Upload@]
       - Text: >
           Upload index.html
-        Code: "dev_cert/s3/files/index.html"
+        Code: "journey-content/dev_cert/s3/files/index.html"
         Comments: >
           index.html is the file that will be loaded when people visit your site
       - Text: >
           Upload error.html
-        Code: "dev_cert/s3/files/error.html"
+        Code: "journey-content/dev_cert/s3/files/error.html"
         Comments: >
           error.html is the file that will be loaded if there is any error
   - Title: Static website configuration
@@ -84,4 +87,3 @@ Sections:
         Comments: >
           Since you haven't configured routes of any kind, this url will throw an
           error.
-    

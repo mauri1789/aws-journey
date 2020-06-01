@@ -28,7 +28,7 @@ def get_lab(lab):
         KeyConditionExpression=Key('pk').eq(lab)
     )["Items"]
     sections = [{
-        "section": section["sk"],
+        "section_id": section["sk"],
         "title": section["title"],
         "description": section.get("description")
     } for section in lab_data if section["sk"].startswith('section')]
@@ -36,7 +36,8 @@ def get_lab(lab):
     sections = [{k: v for k, v in section.items() if v is not None} for section in sections]
     
     lab_record = [{
-        "lab": lab["pk"]
+        "lab": lab["pk"].split('-')[1],
+        "description": lab["description"]
     } for lab in lab_data if lab["sk"].startswith('lab')][0]
     
     return sections, lab_record
