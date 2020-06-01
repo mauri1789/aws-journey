@@ -49,6 +49,7 @@ def add_sections():
           "comments": step.get("Comments"),
           "list": step.get("List"),
           "code": convertFile(step.get("Code")),
+          "code_extension": get_file_extension(step.get("Code")),
           "code_url": step.get("CodeUrl")
         } for index, step in enumerate(section["Steps"])]
         
@@ -57,7 +58,12 @@ def add_sections():
     all_records.extend(section_records)
     
     add_to_db(all_records)
-        
+
+def get_file_extension(location):
+    if (location is not None):
+        return location.split('.')[-1]
+    return None
+
 def convertFile(location):
     text = None
     if location is not None:
