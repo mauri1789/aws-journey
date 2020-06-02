@@ -7,6 +7,7 @@ export interface Step {
    code_extension?: string
    code_file_name?: string
    list?: string[]
+   images?: string[]
 }
 
 export interface Section {
