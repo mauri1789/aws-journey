@@ -37,6 +37,7 @@ def get_section(section):
         "code_extension": step["code_extension"],
         "code_file_name": get_code_file_name(step["code_file_key"]),
         "code_url": generateSignedUrl(step["code_file_key"]),
+        "images": convert_images(step["images"]),
         "description": step.get("description")
     } for step in section_data if step["sk"].startswith('step')]
     
@@ -68,4 +69,9 @@ def generateSignedUrl(key):
             print(e)
             return None
         return response
+    return None
+
+def convert_images(images):
+    if images is not None:
+        return [generateSignedUrl(image) for image in images]
     return None

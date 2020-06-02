@@ -45,6 +45,8 @@ Sections:
           the right link will be able to access it, this is good for public websites.
       - Text: >
           Click [@Save@], notice Permissions tab will have a public tag in it
+        Images:
+          - "dev_cert/s3/images/public_bucket_policy_tag.jpg"
   - Title: Add the web app files
     Id: a536.738ea0fb192e
     Steps:
@@ -79,7 +81,9 @@ Sections:
           Hit [@Save@]
       - Text: >
           Select [@static web hosting@] option again and open the link that is
-          displayed, you should see your 
+          displayed. It links you to your website.
+        Images:
+          - "dev_cert/s3/images/static_website_url.jpg"
       - Text: >
           Add a path to your link and reload it, something like
           [-http://journey-bucket.s3-website.us-east-2.amazonaws.com/somethingElse-].

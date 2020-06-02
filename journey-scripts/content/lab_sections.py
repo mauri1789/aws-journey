@@ -50,6 +50,7 @@ def add_sections():
           "list": step.get("List"),
           "code": convert_file(step.get("Code")),
           "code_extension": get_file_extension(step.get("Code")),
+          "images": step.get("Images"),
           "code_file_key": get_s3_key(step.get("Code")),
           "code_url": step.get("CodeUrl")
         } for index, step in enumerate(section["Steps"])]
