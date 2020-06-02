@@ -1,10 +1,12 @@
 export interface Step {
-   step: string;
-   text: string;
-   comments?: string;
-   code?: string;
-   code_url?: string;
-   list?: string[];
+   step: string
+   text: string
+   comments?: string
+   code?: string
+   code_url?: string
+   code_extension?: string
+   code_file_name?: string
+   list?: string[]
 }
 
 export interface Section {

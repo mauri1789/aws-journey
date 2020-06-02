@@ -1,0 +1,38 @@
+.code-block {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 90%;
+    border: 2px solid hsl(203, 19, 30);
+    .code-header {
+        display: flex;
+        user-select: none;
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+        background-color: hsl(203, 19, 30);
+        color: hsl(210, 66%, 95%);
+        font-family: monospace;
+        font-size: 14px;
+        text-align: left;
+        .file-name {
+            padding-left: 15px;
+            flex: 1 0 0;
+        }
+        .file-options {
+            display: flex;
+            .file-button {
+                margin-right: 10px;
+                margin-left:20px;
+                cursor: pointer;
+                color: white;
+                &:hover {
+                    color: hsl(210, 66%, 90%);
+                }
+            }
+        }
+    }
+    .code{
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}

@@ -8,7 +8,7 @@ import { Section } from '../../../redux/types/sections';
 import { AppActions } from '../../../redux/types/actions';
 import { addSteps } from '../../../redux/actions/sections';
 import { Step } from '../../../redux/types/sections';
-import { StepComponent } from './Step';
+import { StepComponent } from './step/Step';
 
 interface SectionContentProps {
    description: string;

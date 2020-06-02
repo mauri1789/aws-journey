@@ -1,9 +1,8 @@
 import './Step.scss';
 import React, { useEffect, useState, Dispatch } from 'react';
-import { Step } from '../../../redux/types/sections';
-import { parse } from '../../../lib/parser';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Step } from '../../../../redux/types/sections';
+import { parse } from '../../../../lib/parser';
+import { CodeBlockComponent } from './CodeBlock'
 
 interface StepProps {
     step: Step
@@ -18,9 +17,7 @@ function StepComponent({step, index}: StepProps) {
             <div className="step-content">
                 <div>{parse(step.text)}</div>
                 {step.code &&
-                    <SyntaxHighlighter language="json" style={docco}>
-                        {step.code}
-                  </SyntaxHighlighter>
+                    <CodeBlockComponent step={step} />
                 }
             </div>
         </div>
