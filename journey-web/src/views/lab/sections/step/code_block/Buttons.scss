@@ -1,0 +1,37 @@
+.file-button {
+    text-decoration: none;
+    margin-right: 10px;
+    margin-left:20px;
+    cursor: pointer;
+    color: white;
+    &:hover {
+        color: hsl(210, 66%, 90%);
+    }
+    &:active {
+        .message {
+            display: none;
+        }
+    }
+}
+.message {
+    cursor: default;
+    position: absolute;
+    pointer-events: none;
+    font-family: sans-serif;
+    top: 23px;
+    right: 0;
+    background-color: hsl(203, 19, 10);
+    padding: 6px;
+    animation: FadeAnimation 1s ease-in .2s forwards;
+    @keyframes FadeAnimation {
+        0% {
+        opacity: 1;
+        visibility: visible;
+        }
+    
+        100% {
+        opacity: 0;
+        visibility: hidden;
+        }
+    }
+}

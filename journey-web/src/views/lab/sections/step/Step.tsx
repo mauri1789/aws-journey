@@ -2,7 +2,7 @@ import './Step.scss';
 import React, { useEffect, useState, Dispatch } from 'react';
 import { Step } from '../../../../redux/types/sections';
 import { parse } from '../../../../lib/parser';
-import { CodeBlockComponent } from './CodeBlock'
+import { CodeBlockComponent } from './code_block/CodeBlock'
 
 interface StepProps {
     step: Step

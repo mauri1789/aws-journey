@@ -1,3 +1,4 @@
+$code-header-height: 30px;
 .code-block {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -8,7 +9,7 @@
         user-select: none;
         justify-content: space-between;
         align-items: center;
-        height: 30px;
+        height: $code-header-height;
         background-color: hsl(203, 19, 30);
         color: hsl(210, 66%, 95%);
         font-family: monospace;
@@ -20,15 +21,7 @@
         }
         .file-options {
             display: flex;
-            .file-button {
-                margin-right: 10px;
-                margin-left:20px;
-                cursor: pointer;
-                color: white;
-                &:hover {
-                    color: hsl(210, 66%, 90%);
-                }
-            }
+            position: relative;
         }
     }
     .code{

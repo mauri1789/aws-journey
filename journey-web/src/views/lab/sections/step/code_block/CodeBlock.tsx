@@ -2,13 +2,9 @@ import React from 'react'
 import './CodeBlock.scss';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faDownload,
-  faCopy
-} from '@fortawesome/free-solid-svg-icons'
-import { Step } from '../../../../redux/types/sections';
+import { Step } from '../../../../../redux/types/sections';
+import { DownloadCodeComponent } from './DownloadCode';
+import { CopyCodeComponent } from './CopyCode';
 
 interface CodeBlockProps {
     step: Step
@@ -21,12 +17,8 @@ function CodeBlockComponent({step}: CodeBlockProps) {
                     {step.code_file_name}
                 </div>
                 <div className="file-options">
-                    <div className="file-button">
-                        <FontAwesomeIcon icon={faDownload} /> download
-                    </div>
-                    <div className="file-button">
-                        <FontAwesomeIcon icon={faCopy} /> copy
-                    </div>
+                    <DownloadCodeComponent step={step} />
+                    <CopyCodeComponent step={step} />
                 </div>
             </div>
             <SyntaxHighlighter
