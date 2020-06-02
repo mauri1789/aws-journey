@@ -48,8 +48,9 @@ def add_sections():
           "text": step["Text"],
           "comments": step.get("Comments"),
           "list": step.get("List"),
-          "code": convertFile(step.get("Code")),
+          "code": convert_file(step.get("Code")),
           "code_extension": get_file_extension(step.get("Code")),
+          "code_file_key": get_s3_key(step.get("Code")),
           "code_url": step.get("CodeUrl")
         } for index, step in enumerate(section["Steps"])]
         
@@ -64,12 +65,19 @@ def get_file_extension(location):
         return location.split('.')[-1]
     return None
 
-def convertFile(location):
+def convert_file(location):
     text = None
     if location is not None:
         with open(location) as file:
             text = file.read()
     return text
+
+def get_s3_key(path):
+    if path is not None:
+        pathArray = path.split("/")
+        pathArray.pop(0)
+        return "/".join(pathArray)
+    return None
 
 add_sections()
 

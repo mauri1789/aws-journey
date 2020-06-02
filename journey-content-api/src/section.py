@@ -6,8 +6,10 @@ from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource('dynamodb')
+s3 = boto3.client('s3')
 
 table = os.getenv('TABLE_NAME')
+files_bucket = os.getenv('FILES_BUCKET')
 journey_table = dynamodb.Table(table)
 
 def get(event, context):
@@ -32,7 +34,9 @@ def get_section(section):
         "text": step["text"],
         "coments": step["comments"],
         "code": step["code"],
-        "code_url": step["code_url"],
+        "code_extension": step["code_extension"],
+        "code_file_name": get_code_file_name(step["code_file_key"]),
+        "code_url": generateSignedUrl(step["code_file_key"]),
         "description": step.get("description")
     } for step in section_data if step["sk"].startswith('step')]
     
@@ -43,3 +47,25 @@ def get_section(section):
     # } for section in section_data if section["sk"].startswith('section')][0]
     
     return steps
+
+def get_code_file_name(path):
+    if path is not None:
+        return path.split('/')[-1]
+    return None
+
+def generateSignedUrl(key):
+    if key is not None:
+        try:
+            response = s3.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': files_bucket,
+                    'Key': key
+                },
+                ExpiresIn=36000
+            )
+        except ClientError as e:
+            print(e)
+            return None
+        return response
+    return None

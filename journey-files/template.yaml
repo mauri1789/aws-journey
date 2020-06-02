@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion : '2010-09-09'
+
+Resources:
+  JourneyBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: journey-app-files
+
+  JourneyS3FilesBucketARN:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: '/Journey/files/S3BucketARN'
+      Type: String
+      Value: !GetAtt JourneyBucket.Arn
+
+  JourneyS3FilesBucketName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: '/Journey/files/S3BucketName'
+      Type: String
+      Value: !Ref JourneyBucket
+
