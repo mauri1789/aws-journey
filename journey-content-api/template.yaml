@@ -57,7 +57,11 @@ Resources:
           - Effect: Allow
             Action:
             - s3:GetObject
-            Resource: !Ref S3FilesBucketARN
+            Resource:
+              !Join
+                - '/'
+                - - !Ref S3FilesBucketARN
+                  - '*'
           - Effect: Allow
             Action:
               - dynamodb:Query
