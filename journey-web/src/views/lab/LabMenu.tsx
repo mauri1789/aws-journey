@@ -1,6 +1,11 @@
 import React from 'react';
 import './LabMenu.scss';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faBolt, faFlask, faChartBar
+} from '@fortawesome/free-solid-svg-icons'
+
 const Lab="Lab"
 const Tests = "Tests"
 const Statistics = "Statistics"
@@ -18,19 +23,19 @@ function LabMenuComponent ({currentTab, setCurrentTab}: LabMenuProps){
                 className={(currentTab==Lab)?"tab current-tab": "tab"}
                 onClick={()=>setCurrentTab(Lab)}
             >
-                {Lab}
+                <FontAwesomeIcon className="icon" icon={faBolt} /> {Lab}
             </div>
             <div
                 className={(currentTab==Tests)?"tab current-tab": "tab"}
                 onClick={()=>setCurrentTab(Tests)}
             >
-                {Tests}
+                <FontAwesomeIcon className="icon" icon={faFlask} /> {Tests}
             </div>
             <div
                 className={(currentTab==Statistics)?"tab current-tab": "tab"}
                 onClick={()=>setCurrentTab(Statistics)}
             >
-                {Statistics}
+                <FontAwesomeIcon className="icon" icon={faChartBar} /> {Statistics}
             </div>
             <div className="non-tab2"></div>
         </div>

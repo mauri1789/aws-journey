@@ -13,7 +13,7 @@ function LabComponent() {
    return (
       <div className="lab">
          <div className="lab-header">
-            <h1 className="lab-title">S3 Static Website</h1>
+            <h1 className="lab-title">{lab_id.split('_').join(" ")}</h1>
             <LabMenuComponent
                setCurrentTab={setCurrentTab}
                currentTab={currentTab}
