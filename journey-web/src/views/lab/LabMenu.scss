@@ -1,0 +1,40 @@
+@import '../../Colors.scss';
+
+.lab-menu {
+    user-select: none;
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    .tab {
+        cursor: pointer;
+        font-size: 18px;
+        border-bottom: 0.7px solid gray;
+        padding-top: 8px;
+        padding-right: 25px;
+        padding-left: 25px;
+        color: gray;
+        height: 30px;
+        align-self: center;
+        &:hover {
+            color: black;
+        }
+    }
+    .non-tab {
+        border-bottom: 0.7px solid gray;
+        flex: 0 0 50px;
+    }
+    .non-tab2 {
+        border-bottom: 0.7px solid gray;
+        flex: 1 0 0;
+    }
+    .current-tab {
+        color: black;
+        cursor: default;
+        padding-top: 3px;
+        background-color: white;
+        border-top: 5px solid $main-color   ;
+        border-left: 0.7px solid gray;
+        border-right: 0.7px solid gray;
+        border-bottom: 0;
+
+    }
+}

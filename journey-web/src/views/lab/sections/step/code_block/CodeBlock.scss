@@ -1,16 +1,17 @@
+@import '../../../../../Colors.scss';
 $code-header-height: 30px;
 .code-block {
     margin-top: 10px;
     margin-bottom: 10px;
     max-width: 90%;
-    border: 2px solid hsl(203, 19, 30);
+    border: 2px solid $main-color;
     .code-header {
         display: flex;
         user-select: none;
         justify-content: space-between;
         align-items: center;
         height: $code-header-height;
-        background-color: hsl(203, 19, 30);
+        background-color: $main-color;
         color: hsl(210, 66%, 95%);
         font-family: monospace;
         font-size: 14px;

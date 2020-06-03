@@ -1,7 +1,9 @@
+@import '../Colors.scss';
+
 .header {
     display: flex;
     position: fixed;
-    background-color: hsl(203, 19, 30);
+    background-color: $main-color;
     width: 100%;
     .logo-cont {
         flex: 0 0 200px;

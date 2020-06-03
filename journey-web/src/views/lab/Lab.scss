@@ -1,7 +1,18 @@
+@import '../../Colors.scss';
+
 .lab {
-    padding: 0px 50px;
-    .sections {
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    background-color: hsl(0,0,97);
+    margin-bottom: 30px;
+    padding-top: 10px;
+    .lab-header {
+        .lab-title {
+            padding: 0 50px;
+        }
+    }
+    .lab-content {
+        background-color: white;
+        padding: 0 50px;
     }
 }
