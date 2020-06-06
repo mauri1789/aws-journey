@@ -5,9 +5,10 @@ import {
   useParams
 } from "react-router-dom";
 import { SectionTabComponent } from './sections/SectionTab';
+import { TestTabComponent } from './tests/TestTab';
 
 function LabComponent() {
-   const [currentTab, setCurrentTab] = useState("Lab")
+   const [currentTab, setCurrentTab] = useState(Lab)
    let {lab_id, topic_id} = useParams()
 
    return (
@@ -22,6 +23,9 @@ function LabComponent() {
          <div className="lab-content">
             {currentTab==Lab &&
                <SectionTabComponent lab_id={lab_id} />
+            }
+            {currentTab==Tests &&
+               <TestTabComponent lab={lab_id} />
             }
          </div>
       </div>

@@ -1,0 +1,122 @@
+@import '../../../Colors.scss';
+$success: hsl(146, 35, 80);
+$failed: hsl(0, 35, 80);
+$not-tested: hsl(0, 0, 85);
+$in-progress: hsl(195, 35, 80);
+$success-dark: hsl(146, 35, 50);
+$failed-dark: hsl(0, 35, 50);
+$not-tested-dark: hsl(0, 0, 55);
+$in-progress-dark: hsl(195, 35, 50);
+
+.test-tab {
+    display: flex;
+    flex-direction: column;
+    .success-col {
+        color: $success-dark;
+    }
+    .failed-col {
+        color: $failed-dark;
+    }
+    .not-tested-col {
+        color: $not-tested-dark;
+    }
+    .in-progress-col {
+        color: $in-progress-dark;
+    }
+    .test-status {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        .status-cont {
+            display: flex;
+            user-select: none;
+            .success {
+                background-color: $success;
+            }
+            .failed {
+                background-color: $failed;
+            }
+            .not-tested {
+                background-color: $not-tested
+            }
+            .in-progress {
+                background-color: $in-progress;
+            }
+            .status {
+                font-family: monospace;
+                font-weight: bold;
+                font-size: 18px;
+                padding: 5px 10px;
+            }
+            .label {
+                font-size: 20px;
+            }
+        }
+        .test-button {
+            display: flex;
+            align-items: center;
+            background-color: hsl(24, 80, 48);
+            padding: 0 20px;
+            font-size: 19px;
+            user-select: none;
+            cursor: pointer;
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            &:hover {
+                background-color: hsl(24, 80, 55);
+            }
+        }
+    }
+    .test-instructions {
+        padding-top: 30px;
+        .body {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+    .test-parameters {
+        .test-param {
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            label {
+                margin-right: 10px;
+                font-size: 19px;
+            }
+            input {
+                outline:none;
+                font-size: 17px;
+                padding: 5px;
+                padding-left: 10px;
+                border: none;
+                border-bottom: 2px solid $main-color;
+                &:focus, &:active {
+                    border-bottom: 3px solid $main-color;
+                    padding-bottom: 4px;
+                }
+            }
+        }
+    }
+    .test-results {
+        .step-block {
+            padding-top: 10px;
+            .step-header {
+                padding-top: 10px;
+                padding-bottom: 5px;
+                font-size: 19px;
+            }
+            .test-block {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 20px;
+                font-size: 16px;
+            }
+        }
+    }
+    .title {
+        font-size: 21px;
+        font-weight: bold;
+    }
+}
