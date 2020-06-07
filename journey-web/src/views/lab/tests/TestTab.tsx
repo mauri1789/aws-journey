@@ -6,28 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCog, faCheckCircle, faTimesCircle
 } from '@fortawesome/free-solid-svg-icons'
-
-interface ExecutionTest {
-   test: string
-   description: string
-   success: boolean
-}
-interface ExecutionStep {
-   step: string
-   success: boolean | null
-   execution_id: string
-   tests: ExecutionTest[]
-   description: string
-}
-interface UserInput {
-    key: string
-    value: string
-}
-interface Execution {
-   user_input: UserInput[]
-   status: string
-   steps: ExecutionStep[]
-}
+import { Execution, UserInput } from '../../../redux/types/execution';
+import { TestParamsComponent } from './TestParams';
 
 interface TestTabProps {
    lab: string
@@ -58,50 +38,30 @@ function TestTabComponent ({lab}: TestTabProps){
     let toDashCase = (str:string) => {
         return str.toLowerCase().split(" ").join("-")
     }
-    let updateUserInput = (event:React.FormEvent<HTMLInputElement>) => {
-        let input_id = +event.currentTarget.id.split('-')[1]
-        userInput![input_id].value = event.currentTarget.value
-        userInput = [...userInput!]
-        setUserInput(userInput)
-    }
     return (
         <div className="test-tab">
-            <div className="test-status">
-                {execution &&
+            {execution &&
+                <div className="test-status">
                     <div className="status-cont">
                         <div className="label">Status:&nbsp;&nbsp;</div>
                         <div className={`status ${toDashCase(execution!.status)}`}>
                             {execution?.status}
                         </div>
                     </div>
-                }
-                <div className="test-button">
-                    Test Lab
-                </div>
-            </div>
-            {userInput &&
-                <div className="test-parameters">
-                    {userInput.map((param:UserInput, index:number) => (
-                        <div key={`param-${index}`} className="test-param">
-                            <label htmlFor={`param-${index}`}>
-                                {param.key.split("_").join(" ")}:
-                            </label>
-                            <input
-                                id={`param-${index}`}
-                                type="text" onChange={updateUserInput}
-                                value={param.value}
-                            />
-                        </div>
-                    ))}
+                    <div className="test-button">
+                        Test Lab
+                    </div>
                 </div>
             }
-            
-            <div className="test-results"> 
-                <div className="title">
-                    Test Details
-                </div>
-                {execution && execution.steps.length != 0 &&
-                    execution.steps.map((step, key) => (
+            {userInput &&
+                <TestParamsComponent userInput={userInput} setUserInput={setUserInput} />
+            }
+            {execution && execution.steps.length != 0 &&
+                <div className="test-results">
+                    <div className="title">
+                        Test Details
+                    </div>
+                    {execution.steps.map((step, key) => (
                         <div className="step-block" key={`step-block-${key}`}>
                             <div className="step-header">
                                 {selectIcon(step.success)} {step.description}
@@ -111,11 +71,10 @@ function TestTabComponent ({lab}: TestTabProps){
                                     {selectIcon(test.success)} {test.description}
                                 </div> 
                             ))}
-                            
                         </div>
-                    ))
-                }
-            </div>
+                    ))}
+                </div>
+            }
         </div>
     )
 }

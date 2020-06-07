@@ -1,0 +1,25 @@
+@import '../../../Colors.scss';
+.test-parameters {
+    .test-param {
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        label {
+            margin-right: 10px;
+            font-size: 19px;
+        }
+        input {
+            outline:none;
+            font-size: 17px;
+            padding: 5px;
+            padding-left: 10px;
+            border: none;
+            border-bottom: 2px solid $main-color;
+            &:focus, &:active {
+                border-bottom: 3px solid $main-color;
+                padding-bottom: 4px;
+            }
+        }
+    }
+}
