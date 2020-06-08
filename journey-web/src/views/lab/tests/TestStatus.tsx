@@ -23,10 +23,6 @@ function TestStatusComponent ({execution, lab, user_input, setExecution}: TestSt
     let checkExecution = (time: number, execution_id: string) => {
         let getExecution = async () => {
             let user = "user1"
-            let object_user_input: {[key:string]:string} = {}
-            user_input.forEach(
-                user_in => object_user_input[user_in.key] = user_in.value
-            )
             let response = await axios.get(
                 journey_url('validator', `execution/${execution_id}`),
                 {params: { lab, user }}
@@ -63,7 +59,7 @@ function TestStatusComponent ({execution, lab, user_input, setExecution}: TestSt
                 user_input,
                 status:"IN PROGRESS" 
             })
-            let execution_id:string = data.execution_id || "any"
+            let execution_id = (data.length==0)?"any": data[0].execution_id
             checkExecution(1000, execution_id)
         }
         testLabRequest();

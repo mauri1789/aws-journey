@@ -9,6 +9,7 @@ import {
 import { Execution, UserInput } from '../../../redux/types/execution';
 import { TestParamsComponent } from './TestParams';
 import { TestStatusComponent } from './TestStatus';
+import { TestResultsComponent } from './TestResults';
 
 interface TestTabProps {
    lab: string
@@ -29,14 +30,6 @@ function TestTabComponent ({lab, execution, setExecution}: TestTabProps){
        get_execution();
        
     },[])
-    let selectIcon = (status: boolean | null) => {
-        if ( status == null )
-            return <FontAwesomeIcon icon={faCog} spin className="in-progress-col" />
-        if ( status )
-            return <FontAwesomeIcon icon={faCheckCircle} className="success-col" />
-        else
-            return <FontAwesomeIcon icon={faTimesCircle} className="failed-col" />
-    }
     return (
         <div className="test-tab">
             {execution && userInput &&
@@ -50,23 +43,7 @@ function TestTabComponent ({lab, execution, setExecution}: TestTabProps){
                 <TestParamsComponent userInput={userInput} setUserInput={setUserInput} />
             }
             {execution && execution.steps.length != 0 &&
-                <div className="test-results">
-                    <div className="title">
-                        Test Details
-                    </div>
-                    {execution.steps.map((step, key) => (
-                        <div className="step-block" key={`step-block-${key}`}>
-                            <div className="step-header">
-                                {selectIcon(step.success)} {step.description}
-                            </div>
-                            {step.tests.map((test, index) => (
-                                <div className="test-block" key={`test-block-${index}`}>
-                                    {selectIcon(test.success)} {test.description}
-                                </div> 
-                            ))}
-                        </div>
-                    ))}
-                </div>
+                <TestResultsComponent execution={execution} />
             }
         </div>
     )

@@ -9,6 +9,7 @@ export interface ExecutionStep {
    execution_id: string
    tests: ExecutionTest[]
    description: string
+   error?: string
 }
 export interface UserInput {
    key: string

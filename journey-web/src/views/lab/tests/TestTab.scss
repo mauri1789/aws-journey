@@ -15,31 +15,14 @@
     .in-progress-col {
         color: $in-progress-dark;
     }
+    .no-status {
+        color: hsl(0,0, 5);
+    }
     .test-instructions {
         padding-top: 30px;
         .body {
             padding-top: 10px;
             padding-bottom: 10px;
         }
-    }
-    .test-results {
-        .step-block {
-            padding-top: 10px;
-            .step-header {
-                padding-top: 10px;
-                padding-bottom: 5px;
-                font-size: 19px;
-            }
-            .test-block {
-                padding-top: 5px;
-                padding-bottom: 5px;
-                padding-left: 20px;
-                font-size: 16px;
-            }
-        }
-    }
-    .title {
-        font-size: 21px;
-        font-weight: bold;
     }
 }
