@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Execution, UserInput } from '../../../redux/types/execution';
 import { TestParamsComponent } from './TestParams';
+import { TestStatusComponent } from './TestStatus';
 
 interface TestTabProps {
    lab: string
@@ -35,23 +36,14 @@ function TestTabComponent ({lab}: TestTabProps){
         else
             return <FontAwesomeIcon icon={faTimesCircle} className="failed-col" />
     }
-    let toDashCase = (str:string) => {
-        return str.toLowerCase().split(" ").join("-")
-    }
     return (
         <div className="test-tab">
-            {execution &&
-                <div className="test-status">
-                    <div className="status-cont">
-                        <div className="label">Status:&nbsp;&nbsp;</div>
-                        <div className={`status ${toDashCase(execution!.status)}`}>
-                            {execution?.status}
-                        </div>
-                    </div>
-                    <div className="test-button">
-                        Test Lab
-                    </div>
-                </div>
+            {execution && userInput &&
+                <TestStatusComponent
+                    execution={execution}
+                    setExecution={setExecution}
+                    lab={lab}
+                    user_input={userInput} />
             }
             {userInput &&
                 <TestParamsComponent userInput={userInput} setUserInput={setUserInput} />

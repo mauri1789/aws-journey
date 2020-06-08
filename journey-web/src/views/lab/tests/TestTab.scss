@@ -15,51 +15,6 @@
     .in-progress-col {
         color: $in-progress-dark;
     }
-    .test-status {
-        display: flex;
-        justify-content: space-between;
-        padding-top: 30px;
-        padding-bottom: 30px;
-        .status-cont {
-            display: flex;
-            user-select: none;
-            .success {
-                background-color: $success;
-            }
-            .failed {
-                background-color: $failed;
-            }
-            .not-tested {
-                background-color: $not-tested
-            }
-            .in-progress {
-                background-color: $in-progress;
-            }
-            .status {
-                font-family: monospace;
-                font-weight: bold;
-                font-size: 18px;
-                padding: 5px 10px;
-            }
-            .label {
-                font-size: 20px;
-            }
-        }
-        .test-button {
-            display: flex;
-            align-items: center;
-            background-color: hsl(24, 80, 48);
-            padding: 0 20px;
-            font-size: 19px;
-            user-select: none;
-            cursor: pointer;
-            color: white;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            &:hover {
-                background-color: hsl(24, 80, 55);
-            }
-        }
-    }
     .test-instructions {
         padding-top: 30px;
         .body {
