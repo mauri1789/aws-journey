@@ -1,5 +1,8 @@
 from services.common import check_status
 from botocore.exceptions import ClientError
+class GeneralException(Exception):
+    pass
+
 
 s3_bucket = "S3_bucket"
 
@@ -13,7 +16,7 @@ def public_access_block_config(user_session, data):
             return check_status(True, "")
         else:
             print({"error": error.response})
-            raise error
+            raise GeneralException(error.response['Error'])
     message = ""
     all_public = all(not access_conf for access_conf in access.values())
     if not all_public:
@@ -30,7 +33,7 @@ def public_bucket_policy(user_session, data):
             return check_status(False, "No bucket Policy")
         else:
             print({"error": error.response})
-            raise error
+            raise GeneralException(error.response['Error'])
     
     message = ""
     public_policy = status["PolicyStatus"]["IsPublic"]
@@ -49,6 +52,6 @@ def website_config(user_session, data):
             return check_status(False, "No S3 static website Configuration")
         else:
             print({"error": error.response})
-            raise error
+            raise GeneralException(error.response['Error'])
 
     return check_status(True, "")

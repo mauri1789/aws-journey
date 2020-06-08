@@ -20,16 +20,21 @@ def handler(event, context):
         user = body["user"]
         step = body["step"]
         lab = body["lab"]
+        user_input = body["user_input"]
+        execution_id = body["execution_id"]
         execution = {
-            "pk": f"execution-{user.split('-')[-1]}-{lab.split('-')[-1]}",
-            "sk": step
+            "pk": f"execution-{user}-{lab}",
+            "sk": step,
+            "user_input": user_input,
+            "execution_id": execution_id
         }
+        tests = []
         try:
-            user_input = body["user_input"]
-            
             user_session = get_user_session(user)
             
-            tests = get_tests(step)
+            tests, step_record = get_tests(step)
+            execution["description"] = step_record.get("description")
+            
             tests, response = process_tests(tests, user_session, user_input)
             
             execution["tests"] = tests
@@ -39,9 +44,12 @@ def handler(event, context):
             db_response = journey_table.put_item(Item=execution)
             print({"db_response": db_response})
             
-        except ClientError as error:
-            execution["error"] = error
+        except Exception as error:
+            execution["error"] = str(error)
             execution["success"] = False
+            execution["tests"] = tests
+            if not execution.get("description"):
+                execution["description"] = "Tests failed"
             print({"execution": execution})
             
             db_response = journey_table.put_item(Item=execution)
@@ -74,7 +82,8 @@ def get_tests(step):
         "description": item["description"]
         }
         for item in step_data if item["sk"].startswith('test')]
-    return tests
+    step_record = [item for item in step_data if item["sk"] == step].pop()
+    return tests, step_record
 
 def process_tests(tests, user_session, user_input):
     response = {"success": True}
