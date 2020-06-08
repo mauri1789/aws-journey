@@ -86,7 +86,6 @@ function TestStatusComponent ({execution, lab, user_input, setExecution}: TestSt
                 {isInProgress() &&
                     <FontAwesomeIcon icon={faCog} spin />
                 }
-                
             </div>
         </div>
     )

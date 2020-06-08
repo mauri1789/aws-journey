@@ -12,9 +12,10 @@ import { TestStatusComponent } from './TestStatus';
 
 interface TestTabProps {
    lab: string
+   execution: Execution | undefined
+   setExecution: React.Dispatch<React.SetStateAction<Execution | undefined>>
 }
-function TestTabComponent ({lab}: TestTabProps){
-    const [execution, setExecution] = useState<Execution>()
+function TestTabComponent ({lab, execution, setExecution}: TestTabProps){
     let [userInput, setUserInput] = useState<UserInput[]>()
     
     useEffect(() => {

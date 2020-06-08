@@ -3,18 +3,20 @@ import './LabMenu.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faBolt, faFlask, faChartBar
+  faBolt, faFlask, faChartBar, faCog
 } from '@fortawesome/free-solid-svg-icons'
+import { Execution } from '../../redux/types/execution';
 
 const Lab="Lab"
 const Tests = "Tests"
 const Statistics = "Statistics"
 
 interface LabMenuProps {
+    execution: Execution | undefined
     currentTab: string,
     setCurrentTab: (tab: string) => void
 }
-function LabMenuComponent ({currentTab, setCurrentTab}: LabMenuProps){
+function LabMenuComponent ({currentTab, setCurrentTab, execution}: LabMenuProps){
 
     return (
         <div className="lab-menu">
@@ -29,7 +31,17 @@ function LabMenuComponent ({currentTab, setCurrentTab}: LabMenuProps){
                 className={(currentTab==Tests)?"tab current-tab": "tab"}
                 onClick={()=>setCurrentTab(Tests)}
             >
-                <FontAwesomeIcon className="icon" icon={faFlask} /> {Tests}
+                {execution && execution.status == "IN PROGRESS" &&
+                    <FontAwesomeIcon className="icon" icon={faCog} spin /> 
+                }
+                {execution == null &&
+                    <FontAwesomeIcon className="icon" icon={faFlask} /> 
+                }
+                {execution && execution.status != "IN PROGRESS" &&
+                    <FontAwesomeIcon className="icon" icon={faFlask} /> 
+                }
+                {Tests}
+                
             </div>
             <div
                 className={(currentTab==Statistics)?"tab current-tab": "tab"}

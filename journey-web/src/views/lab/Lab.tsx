@@ -6,9 +6,11 @@ import {
 } from "react-router-dom";
 import { SectionTabComponent } from './sections/SectionTab';
 import { TestTabComponent } from './tests/TestTab';
+import { Execution } from '../../redux/types/execution';
 
 function LabComponent() {
    const [currentTab, setCurrentTab] = useState(Lab)
+   const [execution, setExecution] = useState<Execution>()
    let {lab_id, topic_id} = useParams()
 
    return (
@@ -18,6 +20,7 @@ function LabComponent() {
             <LabMenuComponent
                setCurrentTab={setCurrentTab}
                currentTab={currentTab}
+               execution={execution}
             />
          </div>
          <div className="lab-content">
@@ -25,7 +28,7 @@ function LabComponent() {
                <SectionTabComponent lab_id={lab_id} />
             }
             {currentTab==Tests &&
-               <TestTabComponent lab={lab_id} />
+               <TestTabComponent lab={lab_id} execution={execution} setExecution={setExecution} />
             }
          </div>
       </div>
