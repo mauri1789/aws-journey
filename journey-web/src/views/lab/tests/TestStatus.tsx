@@ -13,9 +13,10 @@ interface TestStatusProps {
     execution: Execution
     user_input: UserInput[]
     lab: string
+    invalidParams: boolean
     setExecution: React.Dispatch<React.SetStateAction<Execution | undefined>>
 }
-function TestStatusComponent ({execution, lab, user_input, setExecution}: TestStatusProps) { 
+function TestStatusComponent ({execution, lab, user_input, setExecution, invalidParams}: TestStatusProps) { 
    const [inProgress, setInProgress] = useState(false)
    let toDashCase = (str:string) => {
         return str.toLowerCase().split(" ").join("-")
@@ -38,6 +39,8 @@ function TestStatusComponent ({execution, lab, user_input, setExecution}: TestSt
         setTimeout(getExecution, 1000) 
     }
     let testLab = () => {
+        if (isInProgress() || invalidParams)
+            return;
         setInProgress(true)
         let testLabRequest = async () => {
             let user = "user1"
@@ -74,7 +77,10 @@ function TestStatusComponent ({execution, lab, user_input, setExecution}: TestSt
                 </div>
             </div>
             <div className={
-                `test-button ${(isInProgress())?"test-loading":""}`
+                "test-button " +
+                `${(!isInProgress() && !invalidParams)?"test-enabled":""}` +
+                `${(isInProgress())?"test-loading":""}` +
+               `${(invalidParams)? "invalid-params": ""}`
             } onClick={()=>testLab()}>
                 {!isInProgress() &&
                     <div>Test Lab</div>

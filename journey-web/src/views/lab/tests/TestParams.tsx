@@ -7,6 +7,7 @@ interface TestParamsProps {
     setUserInput: React.Dispatch<React.SetStateAction<UserInput[] | undefined>>
 }
 function TestParamsComponent ({userInput, setUserInput}: TestParamsProps) {
+    
     let updateUserInput = (event:React.FormEvent<HTMLInputElement>) => {
         let input_id = +event.currentTarget.id.split('-')[1]
         userInput![input_id].value = event.currentTarget.value
@@ -21,6 +22,7 @@ function TestParamsComponent ({userInput, setUserInput}: TestParamsProps) {
                         {param.key.split("_").join(" ")}:
                     </label>
                     <input
+                        className={param.value == ""?"error-input":"normal-input"}
                         id={`param-${index}`}
                         type="text" onChange={updateUserInput}
                         value={param.value}

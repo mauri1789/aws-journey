@@ -18,6 +18,11 @@ interface TestTabProps {
 }
 function TestTabComponent ({lab, execution, setExecution}: TestTabProps){
     let [userInput, setUserInput] = useState<UserInput[]>()
+    let [invalidParams, setInvalidParams] = useState<boolean>(false)
+
+    let current_invalid = userInput?.some(param => param.value == "") || false
+    if (current_invalid != invalidParams)
+        setInvalidParams(!invalidParams)
     
     useEffect(() => {
       let get_execution = async () => {
@@ -37,10 +42,14 @@ function TestTabComponent ({lab, execution, setExecution}: TestTabProps){
                     execution={execution}
                     setExecution={setExecution}
                     lab={lab}
+                    invalidParams={invalidParams}
                     user_input={userInput} />
             }
             {userInput &&
-                <TestParamsComponent userInput={userInput} setUserInput={setUserInput} />
+                <TestParamsComponent
+                    userInput={userInput}
+                    setUserInput={setUserInput}
+                />
             }
             {execution && execution.steps.length != 0 &&
                 <TestResultsComponent execution={execution} />

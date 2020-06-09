@@ -9,15 +9,25 @@
             margin-right: 10px;
             font-size: 19px;
         }
+        .normal-input {
+            border-bottom: 2px solid $main-color;
+            &:focus, &:active {
+                border-bottom: 3px solid $main-color;
+            }
+        }
+        .error-input {
+            border-bottom: 2px solid $failed-dark;
+            &:focus, &:active {
+                border-bottom: 3px solid $failed-dark;
+            }
+        }
         input {
             outline:none;
             font-size: 17px;
             padding: 5px;
             padding-left: 10px;
             border: none;
-            border-bottom: 2px solid $main-color;
             &:focus, &:active {
-                border-bottom: 3px solid $main-color;
                 padding-bottom: 4px;
             }
         }
