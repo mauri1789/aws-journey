@@ -10,15 +10,20 @@ interface TestResultsProps {
     execution: Execution
 }
 function TestResultsComponent ({execution}: TestResultsProps) {
-    let selectIcon = (status: boolean | null, step?: ExecutionStep) => {
-        if (status === undefined && step?.success != null)
-            return <FontAwesomeIcon icon={faMinusCircle} className="no-status" />
+    let selectIconStep = (status: boolean | null) => {
         if ( status == null )
             return <FontAwesomeIcon icon={faCog} spin className="in-progress-col" />
         if ( status )
             return <FontAwesomeIcon icon={faCheckCircle} className="success-col" />
         else
             return <FontAwesomeIcon icon={faTimesCircle} className="failed-col" />
+    }
+    let selectIconTest = (testStatus: boolean|null, stepStatus: boolean|null) => {
+        if (stepStatus == null)
+            return <FontAwesomeIcon icon={faCog} spin className="in-progress-col" />
+        if (testStatus === undefined && stepStatus != null)
+            return <FontAwesomeIcon icon={faMinusCircle} className="no-status" />
+        return selectIconStep(testStatus)
     }
     let parseError = (error: string | undefined) => {
         try {
@@ -46,11 +51,11 @@ function TestResultsComponent ({execution}: TestResultsProps) {
                         </div>
                     }
                     <div className="step-header">
-                        {selectIcon(step.success)} {step.description}
+                        {selectIconStep(step.success)} {step.description}
                     </div>
                     {step.tests.map((test, index) => (
                         <div className="test-block" key={`test-block-${index}`}>
-                            {selectIcon(test.success, step)} {test.description}
+                            {selectIconTest(test.success, step.success)} {test.description}
                         </div> 
                     ))}
                 </div>
