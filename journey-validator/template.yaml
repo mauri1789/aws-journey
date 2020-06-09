@@ -177,6 +177,25 @@ Resources:
             Path: /credentials
             Method: POST
 
+  GetExecution:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-get-execution
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: execution.get
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        PostCredentials:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ValidatorAPI
+            Path: /execution/{execution_id}
+            Method: GET
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+
   CustomDomain:
     Type: AWS::ApiGateway::DomainName
     DependsOn: ValidatorAPI

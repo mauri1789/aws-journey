@@ -3,6 +3,21 @@ Lab: S3_static_website
 Description: >
   In this lab you'll create a simple static website using S3. With S3, having a
   website is only about having the right configurations and permissions.
+Tests:
+  UserInput:
+    - "S3_bucket"
+  Resources: []
+  Steps:
+    - Description: S3 Static Website configurations
+      Id: 8210.d14990dc63fc
+      Input: "S3_bucket"
+      Tests:
+        - Method: services.s3.public_access_block_config
+          Description: Public access block configuration
+        - Method: services.s3.public_bucket_policy
+          Description: Public bucket policy configuration
+        - Method: services.s3.website_config
+          Description: Static website configuration
 Sections:
   - Title: Create a S3 bucket
     Description: Create a S3 bucket with unblocked public access protections.

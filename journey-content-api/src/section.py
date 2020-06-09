@@ -36,6 +36,7 @@ def get_section(section):
         "code": step["code"],
         "code_extension": step["code_extension"],
         "code_file_name": get_code_file_name(step["code_file_key"]),
+        "list": step["list"],
         "code_url": generateSignedUrl(step["code_file_key"]),
         "images": convert_images(step["images"]),
         "description": step.get("description")
