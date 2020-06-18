@@ -30,8 +30,8 @@ def add_journey():
     all_records.append(journey_record)
     
     for topic in journey["Topics"]:
-        if topic["Id"] != topic_to_change:
-            continue
+        # if topic["Id"] != topic_to_change:
+        #     continue
         topic_id = topic["Id"]
         journey_topic_record = {
             "pk": f"journey-{journey_id}",
@@ -48,7 +48,7 @@ def add_journey():
         topic_records = [{
             "pk": f"topic-{journey_id}-{topic_id}",
             "sk": f"{activity['Type'].lower()}-{activity['Id']}"
-        } for activity in topic["Activities"]]
+        } for activity in (topic.get("Activities") or [])]
         topic_records.append(journey_topic_record)
         topic_records.append(topic_info_record)
         all_records.extend(topic_records)

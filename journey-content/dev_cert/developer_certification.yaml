@@ -16,3 +16,107 @@ Topics:
         Id: S3_encryption_and_replication
       - Type: Lab
         Id: S3_lifecycle_management
+  - Id: fundamentals
+    Name: Fundamentals
+    Type: Chapter
+    Description: >
+      Let's start with the most important topics to kick off this AWS journey.
+  - Id: EC2
+    Name: Traditional Compute
+    Type: Chapter
+    Description: >
+      Secure and resizable compute capacity in the cloud. You'll learn how to take
+      advantage of the flagship AWS service EC2.
+  - Id: lamda
+    Name: Serverless Compute
+    Type: Chapter
+    Description: >
+      Run code without thinking about servers. Scale easily and flexibly with AWS
+      Lambda
+  - Id: kinesis
+    Name: Kinesis
+    Type: Chapter
+    Description: >
+      Learn how to manage Streams of data with Kinesis
+  - Id: DynamoDB
+    Name: DynamoDB
+    Type: Chapter
+    Description: >
+      Fast and flexible NoSQL Database service for any scale. DynamoDB is the
+      serverless flavor of databases and allows single-digit millisecond
+      peformance at any scale
+  - Id: relational-dbs
+    Name: Relational Databases
+    Type: Chapter
+    Description: >
+      Set up, operate, and scale relational databases with minimal overhead.
+  - Id: security
+    Name: Security
+    Type: Chapter
+    Description: >
+      Secure your AWS resources, learn about KMS, STS and best industry practices
+      regarding security.
+  - Id: accessing-cloud
+    Name: Accessing the Cloud
+    Type: Chapter
+    Description: >
+      Learn how to allow users from the interent to access your AWS services
+  - Id: messaging
+    Name: Messaging
+    Type: Chapter
+    Description: >
+      Message brokers and asynchronous communications make systems more reliable
+  - Id: cloudformation
+    Name: CloudFormation
+    Type: Chapter
+    Description: >
+      Model and provision all your cloud infrastructure resources. AWS CloudFormation
+      provides a common language for you to model and provision AWS and third party
+      application resources in your cloud environment.
+  - Id: serverless-app
+    Name: Serverless App
+    Type: Project
+    Description: >
+      Build a Serverless app with DynamoDB, Lambda and API Gateway
+  - Id: elastic-beanstalk
+    Name: Elastic Beanstalk
+    Type: Chapter
+    Description: >
+      With Elastic Beanstalk you can simply upload your code and Elastic
+      Beanstalk automatically handles the deployment, from capacity provisioning,
+      load balancing, auto-scaling to application health monitoring. At the same time,
+      you retain full control over the AWS resources powering your application and can access
+      the underlying resources at any time
+  - Id: cloudformation-project
+    Name: CloudFormation Project
+    Type: Project
+    Description: >
+      With cloudformation you'll build this project : )
+  - Id: user-management
+    Name: User Management
+    Type: Chapter
+    Description: >
+      Amazon Cognito lets you add user sign-up, sign-in, and access control to your
+      web and mobile apps quickly and easily. Amazon Cognito scales to millions of
+      users and supports sign-in with social identity providers, such as Facebook,
+      Google, and Amazon, and enterprise identity providers via SAML 2.0.
+  - Id: monitoring
+    Name: Monitoring
+    Type: Chapter
+    Description: >
+      Observability of your AWS resources and applications on AWS and on-premises
+  - Id: ci-cd
+    Name: CI/CD
+    Type: Chapter
+    Description: >
+      Continuous Integration and Continuous Deployment has never been easier.
+  - Id: dynamodb-cache
+    Name: DynamoDb as Cache
+    Type: Project
+    Description: >
+      You'll build a dynamoDB cache for frequently accessed SSM params
+  - Id: ci-cd-project
+    Name: CI/CD Project
+    Type: Project
+    Description: >
+      Use CI/CD tools from AWS to build this project
