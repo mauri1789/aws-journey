@@ -1,0 +1,165 @@
+
+@mixin bucketAnimation() {
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode:forwards;
+}
+@mixin activeIcon() {
+    .s3-back-bucket {
+        .bucket-contour{
+            stroke:$bucket-outline-act;
+        }
+    }
+    .side-shape {
+        fill: $side-object-act;
+    }
+    .back-shape {
+        fill: $back-object-act;
+    }
+    .front-shape {
+        fill:$front-object-act;
+    }
+    .s3-bucket {
+        .actual-bucket {
+            .bucket-content {
+                stroke:$bucket-outline-act;
+            }
+            .bucket-line {
+                fill:$bucket-color-act;
+            }
+        }
+        .bucket-handle {
+            stroke:$bucket-outline-act;
+        }
+        ellipse {
+            fill: $bucket-outline-act;
+        }
+    }
+}
+@mixin activeTopic() {
+    .chapter-topic {
+        .top-bar {
+            fill: hsl(131,20,75);
+        }
+        .progress-bar {
+            fill: hsl(131,20,70);
+        }
+        .topic-title-cont {
+            fill: hsl(0,0,35);
+        }
+    }
+    .project-topic {
+        .top-bar {
+            fill: hsl(0,0,80);
+        }
+        .progress-bar {
+            fill: hsl(0,0,75);
+        }
+        .topic-title-cont {
+            fill: hsl(38,77,57);
+        }
+    }
+}
+$bucket-outline: hsl(200, 15, 80);
+$bucket-color: white;
+$front-object: white;
+$back-object: hsl(200, 15, 70);
+$side-object:hsl(200, 15, 60);
+
+$bucket-outline-act: hsl(200, 20, 50);
+$bucket-color-act: white;
+$front-object-act: white;
+$back-object-act: hsl(39,87,50);
+$side-object-act:hsl(39,87,68);
+
+.active-topic {
+    @include activeTopic;
+    .storage-drawing {
+        @include activeIcon;
+    }
+}
+
+.storage-drawing {
+    cursor: pointer;
+    
+    .s3-back-bucket {
+        .bucket-contour{
+            stroke:$bucket-outline;
+            stroke-width:5;
+            stroke-miterlimit:10;
+        }
+        .bucket-ellipse{
+            fill:#808080;
+        }
+    }
+    .side-shape {
+        fill: $side-object;
+    }
+    .back-shape {
+        fill: $back-object;
+    }
+    .front-shape {
+        fill:$front-object;
+    }
+    .s3-bucket {
+        .actual-bucket {
+            .bucket-content {
+                stroke:$bucket-outline;
+                stroke-width:5;
+                stroke-miterlimit:10;
+            }
+            .bucket-line {
+                fill:$bucket-color;
+            }
+        }
+        .bucket-handle {
+            stroke:$bucket-outline;
+            stroke-width:1.5867;
+            stroke-miterlimit:10;
+        }
+        ellipse {
+            fill: $bucket-outline;
+        }
+    }
+    &:hover {
+        @include activeTopic;
+        @include activeIcon;
+        .s3-cube {
+            @include bucketAnimation;
+            animation-name: s3Cube;
+        }
+        .s3-cilinder {
+            @include bucketAnimation;
+            animation-name: s3Cylinder;
+        }
+        .s3-triangle {
+            @include bucketAnimation;
+            animation-name: s3Triangle;
+        }
+    }
+    @keyframes s3Cube {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+        100% {
+            transform: translateX(-2px) translateY(-3px);
+        }
+    }
+    @keyframes s3Triangle {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+        100% {
+            transform: translateX(0) translateY(-3px);
+        }
+    }
+    @keyframes s3Cylinder {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+        100% {
+            transform: translateX(2px) translateY(-3px);
+        }
+    }
+}

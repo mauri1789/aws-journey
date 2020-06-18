@@ -1,0 +1,32 @@
+.chapter-topic {
+    .top-bar {
+        fill: hsl(131,20,75);
+    }
+    .progress-bar {
+        fill: hsl(131,20,70);
+    }
+    .topic-title-cont {
+        fill: hsl(0,0,50);
+    }
+}
+.project-topic {
+    .top-bar {
+        fill: hsl(0,0,80);
+    }
+    .progress-bar {
+        fill: hsl(0,0,75);
+    }
+    .topic-title-cont {
+        fill: hsl(38,77,77);
+    }
+}
+.topic-selected {
+    fill: gray;
+}
+.topic-title {
+    fill: white;
+    font: bold 15px 'Times New Roman';
+}
+.topic-cont {
+    fill: hsl(200,20, 99);
+}

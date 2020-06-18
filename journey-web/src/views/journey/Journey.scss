@@ -1,0 +1,19 @@
+.journey {
+    display: flex;
+
+    .map {
+        position: relative;
+        flex: 2 0 0;
+        height: 130vw;
+        .lines{
+            fill:none;
+            stroke:#3D474C;
+            stroke-width:2;
+            stroke-miterlimit:10;
+        }
+    }
+    .topic {
+        flex: 1 0 0;
+        background-color: lightcoral;
+    }
+}
