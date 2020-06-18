@@ -1,0 +1,18 @@
+Id: dev_cert
+Name: Developer Associate Certification
+Topics:
+  - Id: S3
+    Name: Object Storage
+    Type: Chapter
+    Description: >
+      In this Chapter we'll explore S3 (Simple Storage Service). S3 is built
+      to store and retrieve any amount of data from anywhere
+    Activities:
+      - Type: Theory
+        Id: S3_concepts
+      - Type: Lab
+        Id: S3_static_website
+      - Type: Lab
+        Id: S3_encryption_and_replication
+      - Type: Lab
+        Id: S3_lifecycle_management

@@ -17,6 +17,7 @@ def public_access_block_config(user_session, data):
         else:
             print({"error": error.response})
             raise GeneralException(error.response['Error'])
+    access = access["PublicAccessBlockConfiguration"]
     message = ""
     all_public = all(not access_conf for access_conf in access.values())
     if not all_public:

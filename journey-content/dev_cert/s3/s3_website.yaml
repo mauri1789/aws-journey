@@ -18,6 +18,7 @@ Tests:
           Description: Public bucket policy configuration
         - Method: services.s3.website_config
           Description: Static website configuration
+    
 Sections:
   - Title: Create a S3 bucket
     Description: Create a S3 bucket with unblocked public access protections.
