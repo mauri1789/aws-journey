@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './views/Header';
 import Landing from './views/landing/Landing';
-import Journey from './views/journey/Journey';
+import JourneyComponent from './views/journey/Journey';
 import Topic from './views/topic/Topic';
 import { LabComponent } from './views/lab/Lab';
 import { Provider } from "react-redux";
@@ -32,7 +32,7 @@ function App() {
                   <Topic />
                 </Route>
                 <Route path="/journey/:journey_id">
-                  <Journey />
+                  <JourneyComponent />
                 </Route>
                 <Route path="/">
                   <Landing />

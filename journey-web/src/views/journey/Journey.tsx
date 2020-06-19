@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState, Dispatch } from 'react';
 import './Journey.scss';
 import axios from 'axios';
 import { journey_url } from '../../Project';
@@ -6,8 +6,11 @@ import {
   useParams
 } from "react-router-dom";
 import { Lines } from './drawings/Lines'
-import { TopicDrawing, TOPIC_IN_PROGRESS, TOPIC_UNDONE, TOPIC_DONE } from './drawings/Topic';
+import { TopicDrawing, TOPIC_IN_PROGRESS, TOPIC_UNDONE, TOPIC_DONE } from './drawings/Topic'
+import { setMainTitle } from '../../redux/actions/navigation'
 import { BucketDrawing } from './drawings/Bucket'
+import { AppActions } from '../../redux/types/actions'
+import { connect } from 'react-redux';
 
 interface JourneyTopic {
    topic_id: string
@@ -18,9 +21,9 @@ interface JourneyTopic {
    selected: boolean,
    icon: ((container: ReactNode)=>JSX.Element) | null
 }
-function Journey() {
+type Props = LinkDispatchProps
+function Journey({setMainTitle}:Props) {
    let [Journeytopics, setJourneyTopics] = useState<JourneyTopic[]>([])
-   let [journeyRecord, setJourneyRecord] = useState<boolean>(false)
    let {journey_id} = useParams()
    useEffect(() => {
       let get_execution = async () => {
@@ -33,6 +36,9 @@ function Journey() {
             selected: false,
             ...topicDr[topic["topic_id"]]
          }))
+         if ( setMainTitle ) {
+            setMainTitle(journey.journey)
+         }
          setJourneyTopics(UITopics)
        }
        get_execution();
@@ -170,6 +176,22 @@ function Journey() {
       </div>
    );
   }
+
+interface LinkDispatchProps {
+   setMainTitle?: (main_title: string) => void
+}
+
+const mapDispatchToProps = (
+   dispatch: Dispatch<AppActions>,
+   ownProps: {}
+): LinkDispatchProps => ({
+   setMainTitle: (main_title) => dispatch(setMainTitle(main_title))
+});
+
+let JourneyComponent = connect(
+   null,
+   mapDispatchToProps
+ )(Journey);
   
-  export default Journey;
+  export default JourneyComponent;
   
