@@ -19,7 +19,7 @@ function TopicDrawing ({x, y, status, selected, text, icon, type}: TopicDrawingP
     let side = 149
     let titleHeight = 35
     let groupClass = "chapter-topic"
-    if ( type == "project" ) {
+    if ( type == "Project" ) {
         groupClass = "project-topic"
     }
     let Container= () => (
@@ -37,8 +37,9 @@ function TopicDrawing ({x, y, status, selected, text, icon, type}: TopicDrawingP
         </g>
     )
     return (
-        <g className={(selected)?"active-topic":""} >            
+        <g className={(selected)?"active-topic topic-group":"topic-group"} >
             {icon && icon(<Container />)}
+            {!icon && <Container />}
         </g>
     )
 }

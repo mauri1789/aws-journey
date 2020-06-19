@@ -14,7 +14,7 @@ function Header() {
             logo
          </div>
          <div className="nav-cont">
-            nav-cont
+            Developer Associate Certification
          </div>
          <div className="user-buttons">
             <HeaderButton text="Signup" />

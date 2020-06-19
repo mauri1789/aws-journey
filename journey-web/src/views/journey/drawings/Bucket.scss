@@ -37,30 +37,6 @@
         }
     }
 }
-@mixin activeTopic() {
-    .chapter-topic {
-        .top-bar {
-            fill: hsl(131,20,75);
-        }
-        .progress-bar {
-            fill: hsl(131,20,70);
-        }
-        .topic-title-cont {
-            fill: hsl(0,0,35);
-        }
-    }
-    .project-topic {
-        .top-bar {
-            fill: hsl(0,0,80);
-        }
-        .progress-bar {
-            fill: hsl(0,0,75);
-        }
-        .topic-title-cont {
-            fill: hsl(38,77,57);
-        }
-    }
-}
 $bucket-outline: hsl(200, 15, 80);
 $bucket-color: white;
 $front-object: white;
@@ -74,7 +50,6 @@ $back-object-act: hsl(39,87,50);
 $side-object-act:hsl(39,87,68);
 
 .active-topic {
-    @include activeTopic;
     .storage-drawing {
         @include activeIcon;
     }
@@ -123,7 +98,6 @@ $side-object-act:hsl(39,87,68);
         }
     }
     &:hover {
-        @include activeTopic;
         @include activeIcon;
         .s3-cube {
             @include bucketAnimation;

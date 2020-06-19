@@ -1,205 +1,164 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import './Journey.scss';
+import axios from 'axios';
+import { journey_url } from '../../Project';
+import {
+  useParams
+} from "react-router-dom";
 import { Lines } from './drawings/Lines'
 import { TopicDrawing, TOPIC_IN_PROGRESS, TOPIC_UNDONE, TOPIC_DONE } from './drawings/Topic';
 import { BucketDrawing } from './drawings/Bucket'
 
+interface JourneyTopic {
+   topic_id: string
+   type: string
+   description: string,
+   x: number,
+   y: number,
+   selected: boolean,
+   icon: ((container: ReactNode)=>JSX.Element) | null
+}
 function Journey() {
-   let topics = [
-      {
-         title: "Fundamentals",
-         x: "325.5",
-         y: "26.5",
-         status: TOPIC_DONE,
-         selected: true,
-         type: "chapter",
-         icon: null
-      },
-      {
-         title: "Traditional Computing",
-         x: "75.5",
-         y: "251.5",
-         status: TOPIC_DONE,
-         selected: false,
-         type: "chapter",
-         icon: null
-      },
-      {
-         title: "Serverless Compute",
-         x: "325.5",
-         y: "251.5",
-         status: TOPIC_DONE,
-         selected: false,
-         type: "chapter",
-         icon: null
-      },
-      {
-         title: "Object Storage",
-         x: "575.5",
-         y: "251.5",
-         status: TOPIC_DONE,
-         selected: false,
-         type: "chapter",
+   let [Journeytopics, setJourneyTopics] = useState<JourneyTopic[]>([])
+   let [journeyRecord, setJourneyRecord] = useState<boolean>(false)
+   let {journey_id} = useParams()
+   useEffect(() => {
+      let get_execution = async () => {
+         let user = "user1"
+         let response = await axios.get(journey_url('content', `journey/${journey_id}`))
+         let { data } = response;
+         let {topics, journey} = data
+         let UITopics: JourneyTopic[] = topics.map((topic: JourneyTopic) => ({
+            ...topic,
+            selected: false,
+            ...topicDr[topic["topic_id"]]
+         }))
+         setJourneyTopics(UITopics)
+       }
+       get_execution();
+       
+    },[])
+   interface UITopic {
+      x: number,
+      y: number,
+      icon?: ((container: ReactNode)=>JSX.Element) | null
+   }
+   let topicDr:{[name:string]: UITopic} = {
+      "S3": {
+         x: 575.5,
+         y: 251.5,
          icon: (container:ReactNode) => <BucketDrawing container={container}/>
       },
-      {
-         title: "Kinesis",
-         x: "125.5",
-         y: "476.5",
-         status: TOPIC_DONE,
-         selected: false,
-         type: "chapter",
+      "fundamentals": {
+         x: 325.5,
+         y: 26.5,
          icon: null
       },
-      {
-         title: "DynamoDB",
-         x: "325.5",
-         y: "476.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "EC2": {
+         x: 75.5,
+         y: 251.5,
          icon: null
       },
-      {
-         title: "Excel Import",
-         x: "525.5",
-         y: "476.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "lambda": {
+         x: 325.5,
+         y: 251.5,
          icon: null
       },
-      {
-         title: "Relational Databases",
-         x: "75.5",
-         y: "701.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "kinesis": {
+         x: 125.5,
+         y: 476.5,
          icon: null
       },
-      {
-         title: "Security",
-         x: "325.5",
-         y: "701.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "DynamoDB": {
+         x: 325.5,
+         y: 476.5,
          icon: null
       },
-      {
-         title: "Accessing the cloud",
-         x: "575.5",
-         y: "701.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "security": {
+         x: 325.5,
+         y: 701.5,
          icon: null
       },
-      {
-         title: "Messaging",
-         x: "125.5",
-         y: "926.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "excel_import": {
+         x: 525.5,
+         y: 476.5,
          icon: null
       },
-      {
-         title: "CloudFormation",
-         x: "325.5",
-         y: "926.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "relational_dbs": {
+         x: 75.5,
+         y: 701.5,
          icon: null
       },
-      {
-         title: "Serverless App",
-         x: "525.5",
-         y: "926.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "accessing_cloud": {
+         x: 575.5,
+         y: 701.5,
          icon: null
       },
-      {
-         title: "Elastic BeanStalk",
-         x: "75.5",
-         y: "1151.5",
-         status: TOPIC_IN_PROGRESS,
-         selected: false,
-         type: "chapter",
+      "messaging": {
+         x: 125.5,
+         y: 926.5,
          icon: null
       },
-      {
-         title: "CF Serverless App",
-         x: "325.5",
-         y: "1151.5",
-         status: TOPIC_UNDONE,
-         selected: false,
-         type: "chapter",
+      "cloudformation": {
+         x: 325.5,
+         y: 926.5,
          icon: null
       },
-      {
-         title: "User Management",
-         x: "575.5",
-         y: "1151.5",
-         status: TOPIC_UNDONE,
-         selected: false,
-         type: "chapter",
+      "serverless_app": {
+         x: 525.5,
+         y: 926.5,
          icon: null
       },
-      {
-         title: "Monitoring",
-         x: "125.5",
-         y: "1376.5",
-         status: TOPIC_UNDONE,
-         selected: false,
-         type: "chapter",
+      "elastic_beanstalk": {
+         x: 75.5,
+         y: 1151.5,
          icon: null
       },
-      {
-         title: "CI/CD",
-         x: "525.5",
-         y: "1376.5",
-         status: TOPIC_UNDONE,
-         selected: false,
-         type: "chapter",
+      "cloudformation_project": {
+         x: 325.5,
+         y: 1151.5,
          icon: null
       },
-      {
-         title: "DynamoDB Cache",
-         x: "225.5",
-         y: "1601.5",
-         status: TOPIC_UNDONE,
-         selected: false,
-         type: "chapter",
+      "user_management": {
+         x: 575.5,
+         y: 1151.5,
          icon: null
       },
-      {
-         title: "CI/CD Project",
-         x: "425.5",
-         y: "1601.5",
-         status: TOPIC_UNDONE,
-         selected: false,
-         type: "chapter",
+      "monitoring": {
+         x: 125.5,
+         y: 1376.5,
+         icon: null
+      },
+      "ci_cd": {
+         x: 525.5,
+         y: 1376.5,
+         icon: null
+      },
+      "dynamodb_cache": {
+         x: 225.5,
+         y: 1601.5,
+         icon: null
+      },
+      "ci_cd_project": {
+         x: 425.5,
+         y: 1601.5,
          icon: null
       }
-   ]
+   }
    return (
       <div className="journey">
          <div className="map">
             <svg viewBox="0 0 800 1800">
-               {topics.map((topic, index) =>
+               {Journeytopics.map((topic, index) =>
                   <TopicDrawing
                      x={+topic.x}
                      y={+topic.y}
-                     status={topic.status}
+                     status={""}
                      selected = {topic.selected}
-                     text={topic.title}
+                     text={topic.description}
                      icon={topic.icon}
                      type={topic.type}
+                     key={`topic-drawing-${index}`}
                   />
                )}
                <Lines />

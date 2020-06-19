@@ -31,7 +31,7 @@ function App() {
                 <Route path="/topic/:topic">
                   <Topic />
                 </Route>
-                <Route path="/journey/:journey">
+                <Route path="/journey/:journey_id">
                   <Journey />
                 </Route>
                 <Route path="/">

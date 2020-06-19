@@ -1,3 +1,36 @@
+
+@mixin activeTopic() {
+    .chapter-topic {
+        .top-bar {
+            fill: hsl(131,20,75);
+        }
+        .progress-bar {
+            fill: hsl(131,20,70);
+        }
+        .topic-title-cont {
+            fill: hsl(0,0,35);
+        }
+    }
+    .project-topic {
+        .top-bar {
+            fill: hsl(0,0,80);
+        }
+        .progress-bar {
+            fill: hsl(0,0,75);
+        }
+        .topic-title-cont {
+            fill: hsl(38,77,57);
+        }
+    }
+}
+.topic-group {
+    &:hover {
+        @include activeTopic;
+    }
+}
+.active-topic {
+    @include activeTopic;
+}
 .chapter-topic {
     .top-bar {
         fill: hsl(131,20,75);
@@ -17,7 +50,7 @@
         fill: hsl(0,0,75);
     }
     .topic-title-cont {
-        fill: hsl(38,77,77);
+        fill: hsl(38,77,67);
     }
 }
 .topic-selected {
