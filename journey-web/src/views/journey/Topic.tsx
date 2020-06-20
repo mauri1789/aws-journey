@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import Topic from '../../topic/Topic';
+import Topic from '../topic/Topic';
 import './Topic.scss';
 let TOPIC_DONE = "DONE"
 let TOPIC_IN_PROGRESS = "IN_PROGRESS"
