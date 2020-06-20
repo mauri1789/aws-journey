@@ -1,7 +1,21 @@
+@import "../../App.scss";
 .journey {
     display: flex;
     .topic {
-        flex: 1 0 0;
-        background-color: lightcoral;
+        flex: 2 0 0;
+        background-color: hsl(0, 0, 99);
+        padding: 0 20px;
+        .topic-title {
+            font-family: $titles-family;
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        .topic-description {
+            font-size: 1.2rem;
+            font-family: $text-family, monospace;
+        }
+        .topic-sessions {
+
+        }
     }
 }

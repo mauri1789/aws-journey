@@ -1,27 +1,24 @@
 import React, { ReactNode } from 'react';
-import Topic from '../topic/Topic';
 import './Topic.scss';
+import { JourneyTopic } from '../../redux/types/journey';
 let TOPIC_DONE = "DONE"
 let TOPIC_IN_PROGRESS = "IN_PROGRESS"
 let TOPIC_UNDONE = "UNDONE"
 
 interface TopicDrawingProps {
-    x: number
-    y: number
-    status: string
-    selected: boolean
-    text: string
-    type: string
-    icon: ((container: ReactNode)=>JSX.Element) | null
+    topic: JourneyTopic
+    getTopic: (topic_id:string, topic_name: string)=>void
   }
  
-function TopicDrawing ({x, y, status, selected, text, icon, type}: TopicDrawingProps) {
+function TopicDrawing ({topic, getTopic}: TopicDrawingProps) {
     let side = 149
     let titleHeight = 35
     let groupClass = "chapter-topic"
-    if ( type == "Project" ) {
+    if ( topic.type == "Project" ) {
         groupClass = "project-topic"
     }
+    let x = topic.x
+    let y = topic.y
     let Container= () => (
         <g className={groupClass}>
             <rect x={x} y={y} className="topic-cont " width={side} height={side}/>
@@ -32,14 +29,16 @@ function TopicDrawing ({x, y, status, selected, text, icon, type}: TopicDrawingP
                 dominantBaseline="middle"
                 textAnchor="middle"
                 className="topic-title">
-                    {text}
+                    {topic.description}
             </text>
         </g>
     )
     return (
-        <g className={(selected)?"active-topic topic-group":"topic-group"} >
-            {icon && icon(<Container />)}
-            {!icon && <Container />}
+        <g 
+            className={(topic.selected)?"active-topic topic-group":"topic-group"}
+            onClick={() => getTopic(topic.topic_id, topic.description)} >
+            {topic.icon && topic.icon(<Container />)}
+            {!topic.icon && <Container />}
         </g>
     )
 }

@@ -12,37 +12,81 @@ import { topicDrawings } from './dev_cert/topic_drawings';
 import { JourneyTopic } from '../../redux/types/journey';
 import { JourneyMap } from './JourneyMap';
 
-
+interface TopicSession {
+   type: string
+   session_id: string
+   description: string
+}
+interface MainTopic {
+   topic_id: string
+   topic_type: string
+   description: string
+   title: string
+   sessions: TopicSession[]
+}
 type Props = LinkDispatchProps
 function Journey({setMainTitle}:Props) {
-   let [Journeytopics, setJourneyTopics] = useState<JourneyTopic[]>([])
+   let [journeyTopics, setJourneyTopics] = useState<JourneyTopic[]>([])
    let {journey_id} = useParams()
+   let [mainTopic, setmainTopic] = useState<MainTopic>()
+
+   let setTopicActive = (topic_id: string | undefined) => {
+      journeyTopics = journeyTopics.map(topic => ({
+         ...topic,
+         selected: (topic_id == topic.topic_id)? true:false
+      }))
+      setJourneyTopics(journeyTopics)
+   }
+   
    useEffect(() => {
-      let get_journey = async () => {
-         let response = await axios.get(journey_url('content', `journey/${journey_id}`))
-         let { data } = response;
-         let {topics, journey} = data
-         let UITopics: JourneyTopic[] = topics.map((topic: JourneyTopic) => ({
-            ...topic,
-            selected: false,
-            ...topicDrawings[topic["topic_id"]]
-         }))
-         if ( setMainTitle ) {
-            setMainTitle(journey.journey)
-         }
-         setJourneyTopics(UITopics)
-       }
-       get_journey();
+      let getData = async () => {
+         await getJourney();
+         getTopic('fundamentals', 'Fundamentals');
+      }
+      getData()
     },[])
+    useEffect(() => {
+      setTopicActive(mainTopic?.topic_id)
+    },[mainTopic])
    return (
       <div className="journey">
-         <JourneyMap journey_topics={Journeytopics} />
+         <JourneyMap journey_topics={journeyTopics} getTopic={getTopic} />
          <div className="topic">
-         topic
+            <div className="topic-title">
+               {mainTopic?.title}
+            </div>
+            <div className="topic-description">
+               {mainTopic?.description}
+            </div>
+         {/* {JSON.stringify(mainTopic)} */}
          </div>
       </div>
    );
-  }
+   async function getTopic (topic_id:string, topic_name:string) {
+      let response = await axios.get(journey_url('content', `topic/${journey_id}/${topic_id}`))
+      let { data } = response;
+      let {sessions, topic} = data
+      topic.topic_id = topic_id
+      topic.title = topic_name
+      topic.sessions = sessions
+      setmainTopic(topic)
+   }
+   async function getJourney () {
+      let response = await axios.get(journey_url('content', `journey/${journey_id}`))
+      let { data } = response;
+      let {topics, journey} = data
+      let UITopics: JourneyTopic[] = topics.map((topic: JourneyTopic) => ({
+         ...topic,
+         selected: false,
+         ...topicDrawings[topic["topic_id"]]
+      }))
+      if ( setMainTitle ) {
+         setMainTitle(journey.journey)
+      }
+      setJourneyTopics(UITopics)
+      return Promise.resolve()
+   }
+}
 
 interface LinkDispatchProps {
    setMainTitle?: (main_title: string) => void
@@ -58,7 +102,7 @@ const mapDispatchToProps = (
 let JourneyComponent = connect(
    null,
    mapDispatchToProps
- )(Journey);
+)(Journey);
   
-  export default JourneyComponent;
+export default JourneyComponent;
   
