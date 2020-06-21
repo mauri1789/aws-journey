@@ -1,0 +1,169 @@
+@import '../../../../Colors.scss';
+
+@mixin lambdaAnimation() {
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode:forwards;
+}
+@mixin activeIcon() {
+    .lambda-cylinder {
+        .cylinder-side {
+            fill: $active-gray;
+        }
+        .cylinder-front {
+            fill: gainsboro;
+        }
+    }
+    .lambda-cube {
+        .cube-side {
+            fill: $pasive-gray;
+        }
+        .cube-back {
+            fill: $active-gray;
+        }
+        .cube-front {
+            fill: white;
+        }
+    }
+    .lambda-outer {
+        fill: $selected-main;
+        // stroke: $selected-main;
+        // stroke-width:3;
+        // stroke-miterlimit:10;
+    }
+    .lambda-inner {
+        fill:white;
+        stroke: $selected-main;
+        stroke-width:3;
+        stroke-miterlimit:10;
+    }
+    .lambda-icon {
+        fill:$orange-tone1-act;
+        stroke:#000000;
+        stroke-width:0.5;
+        stroke-miterlimit:10;
+    }
+    .lambda-cog {
+        fill:hsl(0,0,35);
+        stroke:black;
+        stroke-width:1;
+        stroke-miterlimit:10;
+    }
+    .lambda-back {
+        fill: white;
+    }
+}
+
+.lambda {
+    .lambda-cylinder {
+        .cylinder-side {
+            fill: $orange-tone1;
+        }
+        .cylinder-front {
+            fill: $orange-tone0;
+        }
+    }
+    .lambda-cube {
+        opacity: 0;
+        .cube-side {
+            fill: $orange-tone1;
+        }
+        .cube-back {
+            fill: $orange-tone2;
+        }
+        .cube-front {
+            fill: $orange-tone0;
+        }
+    }
+    .lambda-outer {
+        fill: $unselected-main;
+    }
+    .lambda-inner {
+        fill:white;
+    }
+    .lambda-icon {
+        fill:lighten($selected-main, 20%);
+        stroke:$unselected-main;
+        stroke-width:1.5;
+        stroke-miterlimit:10;
+    }
+    .lambda-cog {
+        fill:$orange-tone1;
+        stroke:gray;
+        stroke-width:1.0293;
+        stroke-miterlimit:10;
+    }
+    .lambda-back {
+        fill: $unselected-main;
+    }
+    &:hover {
+        @include activeIcon;
+        .lambda-cube {
+            @include lambdaAnimation;
+            animation-name: lambdaCube;
+        }
+        .lambda-cylinder {
+            @include lambdaAnimation;
+            animation-name: lambdaCylinder;
+        }
+        .lambda-cog {
+            @include lambdaAnimation;
+            animation-name: lambdaCog;
+        }
+    }
+    @keyframes lambdaCube {
+        0% {
+            transform: translateX(0) translateY(0);
+            opacity: 0;
+        }
+        40% {
+            transform: translateX(0) translateY(30px);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(0) translateY(30px);
+            opacity: 0;
+        }
+    }
+    @keyframes lambdaCylinder {
+        0% {
+            transform: translateX(0) translateY(0);
+            opacity: 0;
+        }
+        60% {
+            transform: translateX(0) translateY(0);
+            opacity: 0;
+        }
+        99% {
+            transform: translateX(30px) translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(30px) translateY(0);
+            opacity: 0;
+        }
+    }
+    @keyframes lambdaCog {
+        0% {
+            transform: rotate(0);
+            transform-origin: 400.5px 314.5px;
+        }
+        40% {
+            transform: rotate(150deg);
+            transform-origin: 400.5px 314.5px;
+        }
+        60% {
+            transform: rotate(150deg);
+            transform-origin: 400.5px 314.5px;
+        }
+        100% {
+            transform: rotate(0);
+            transform-origin: 400.5px 314.5px;
+        }
+    }
+}
+// .st12{stroke:#000000;stroke-width:1.5867;stroke-miterlimit:10;}
+// .st14{fill:none;stroke:#FF931E;stroke-width:2.8553;stroke-miterlimit:10;}
+// .st15{fill:#FFFFFF;stroke:#000000;stroke-width:1.1421;stroke-miterlimit:10;}
+// .st16{fill:#3FA9F5;stroke:#000000;stroke-width:1.0293;stroke-miterlimit:10;}

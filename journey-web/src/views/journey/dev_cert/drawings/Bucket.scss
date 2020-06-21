@@ -1,4 +1,5 @@
 
+@import '../../../../Colors.scss';
 @mixin bucketAnimation() {
     animation-duration: 0.5s;
     animation-iteration-count: 1;
@@ -12,13 +13,13 @@
         }
     }
     .side-shape {
-        fill: $side-object-act;
+        fill: $orange-tone1-act;
     }
     .back-shape {
-        fill: $back-object-act;
+        fill: $orange-tone2-act;
     }
     .front-shape {
-        fill:$front-object-act;
+        fill:$orange-tone0-act;
     }
     .s3-bucket {
         .actual-bucket {
@@ -37,17 +38,11 @@
         }
     }
 }
-$bucket-outline: hsl(200, 15, 80);
+$bucket-outline: $unselected-main;
 $bucket-color: white;
-$front-object: white;
-$back-object: hsl(200, 15, 70);
-$side-object:hsl(200, 15, 60);
 
-$bucket-outline-act: hsl(200, 20, 50);
+$bucket-outline-act: $selected-main;
 $bucket-color-act: white;
-$front-object-act: white;
-$back-object-act: hsl(39,87,50);
-$side-object-act:hsl(39,87,68);
 
 .active-topic {
     .storage-drawing {
@@ -55,9 +50,7 @@ $side-object-act:hsl(39,87,68);
     }
 }
 
-.storage-drawing {
-    cursor: pointer;
-    
+.storage-drawing {    
     .s3-back-bucket {
         .bucket-contour{
             stroke:$bucket-outline;
@@ -69,13 +62,13 @@ $side-object-act:hsl(39,87,68);
         }
     }
     .side-shape {
-        fill: $side-object;
+        fill: $orange-tone1;
     }
     .back-shape {
-        fill: $back-object;
+        fill: $orange-tone2;
     }
     .front-shape {
-        fill:$front-object;
+        fill:$orange-tone0;
     }
     .s3-bucket {
         .actual-bucket {

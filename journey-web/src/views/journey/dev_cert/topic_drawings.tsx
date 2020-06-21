@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react"
 import { BucketDrawing } from "./drawings/Bucket"
+
 import { UITopic } from "../../../redux/types/journey"
+import { LambdaDrawing } from "./drawings/LambdaDrawing"
 
 let topicDrawings:{[name:string]: UITopic} = {
     "S3": {
@@ -21,7 +23,7 @@ let topicDrawings:{[name:string]: UITopic} = {
     "lambda": {
         x: 325.5,
         y: 251.5,
-        icon: null
+        icon: (container: ReactNode) => <LambdaDrawing container={container} />
     },
     "kinesis": {
         x: 125.5,
