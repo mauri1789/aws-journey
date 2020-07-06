@@ -7,27 +7,59 @@ Topics:
     Description: >
       In this Chapter we'll explore S3 (Simple Storage Service). S3 is built
       to store and retrieve any amount of data from anywhere
-    Activities:
+    Sessions:
       - Type: Theory
         Id: S3_concepts
+        Description: S3 Concepts
       - Type: Lab
         Id: S3_static_website
+        Description: S3 static website
       - Type: Lab
         Id: S3_encryption_and_replication
+        Description: S3 encryption and replication
       - Type: Lab
         Id: S3_lifecycle_management
+        Description: S3 lifecycle management
   - Id: fundamentals
     Name: Fundamentals
     Type: Chapter
     Description: >
       Let's start with the most important topics to kick off this AWS journey.
+    Sessions:
+      - Type: Video
+        Id: motivation
+        Description: About the AWS Developer Certification
+      - Type: Video
+        Id: aws_journey
+        Description: About AWS Journey
+      - Type: Theory
+        Id: aws_world
+        Description: The AWS World
+      - Type: Theory
+        Id: IAM
+        Description: Identity and Access Management
+      - Type: Lab
+        Id: client_aws_environment
+        Description: Build an AWS environment for your clients
+      - Type: Theory
+        Id: cloud9
+        Description: AWS Access Tools
+      - Type: Lab
+        Id: dev_environment
+        Description: Set up your development environment
+      - Type: Theory
+        Id: serverless
+        Description: Serverless Architecture
+      - Type: Lab
+        Id: S3_introduction
+        Description: Store your objects in S3
   - Id: EC2
     Name: Traditional Compute
     Type: Chapter
     Description: >
       Secure and resizable compute capacity in the cloud. You'll learn how to take
       advantage of the flagship AWS service EC2.
-  - Id: lamda
+  - Id: lambda
     Name: Serverless Compute
     Type: Chapter
     Description: >
@@ -45,7 +77,7 @@ Topics:
       Fast and flexible NoSQL Database service for any scale. DynamoDB is the
       serverless flavor of databases and allows single-digit millisecond
       peformance at any scale
-  - Id: relational-dbs
+  - Id: relational_dbs
     Name: Relational Databases
     Type: Chapter
     Description: >
@@ -56,7 +88,7 @@ Topics:
     Description: >
       Secure your AWS resources, learn about KMS, STS and best industry practices
       regarding security.
-  - Id: accessing-cloud
+  - Id: accessing_cloud
     Name: Accessing the Cloud
     Type: Chapter
     Description: >
@@ -73,12 +105,12 @@ Topics:
       Model and provision all your cloud infrastructure resources. AWS CloudFormation
       provides a common language for you to model and provision AWS and third party
       application resources in your cloud environment.
-  - Id: serverless-app
+  - Id: serverless_app
     Name: Serverless App
     Type: Project
     Description: >
       Build a Serverless app with DynamoDB, Lambda and API Gateway
-  - Id: elastic-beanstalk
+  - Id: elastic_beanstalk
     Name: Elastic Beanstalk
     Type: Chapter
     Description: >
@@ -87,12 +119,18 @@ Topics:
       load balancing, auto-scaling to application health monitoring. At the same time,
       you retain full control over the AWS resources powering your application and can access
       the underlying resources at any time
-  - Id: cloudformation-project
+  - Id: cloudformation_project
     Name: CloudFormation Project
     Type: Project
     Description: >
       With cloudformation you'll build this project : )
-  - Id: user-management
+  - Id: excel_import
+    Name: Excel Import Project
+    Type: Project
+    Description: >
+      Using S3 we'll make an import functionality to get information from excel to
+      dynamoDB
+  - Id: user_management
     Name: User Management
     Type: Chapter
     Description: >
@@ -105,17 +143,17 @@ Topics:
     Type: Chapter
     Description: >
       Observability of your AWS resources and applications on AWS and on-premises
-  - Id: ci-cd
+  - Id: ci_cd
     Name: CI/CD
     Type: Chapter
     Description: >
       Continuous Integration and Continuous Deployment has never been easier.
-  - Id: dynamodb-cache
+  - Id: dynamodb_cache
     Name: DynamoDb as Cache
     Type: Project
     Description: >
       You'll build a dynamoDB cache for frequently accessed SSM params
-  - Id: ci-cd-project
+  - Id: ci_cd_project
     Name: CI/CD Project
     Type: Project
     Description: >

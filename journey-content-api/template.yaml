@@ -128,6 +128,46 @@ Resources:
           TABLE_NAME: !Ref TableName
           FILES_BUCKET: !Ref S3FilesBucketName
 
+  GetJourney:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-get-journey
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: journey.get
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        GetJourney:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ContentAPI
+            Path: /journey/{journey}
+            Method: GET
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+          FILES_BUCKET: !Ref S3FilesBucketName
+
+  GetTopic:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: journey-get-topic
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: topic.get
+      Role: !GetAtt LambdaRole.Arn
+      Events:
+        GetTopic:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ContentAPI
+            Path: /topic/{journey}/{topic}
+            Method: GET
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+          FILES_BUCKET: !Ref S3FilesBucketName
+
   CustomDomain:
     Type: AWS::ApiGateway::DomainName
     DependsOn: ContentAPI

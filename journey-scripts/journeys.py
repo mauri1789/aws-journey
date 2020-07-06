@@ -14,7 +14,7 @@ def add_to_db(records):
     print(records)
 
 def add_journey():
-    topic_to_change = "S3"
+    topic_to_change = "fundamentals"
     with open("journey-content/dev_cert/developer_certification.yaml") as yaml_journey:
         try:
             journey = yaml.safe_load(yaml_journey)
@@ -36,7 +36,7 @@ def add_journey():
         journey_topic_record = {
             "pk": f"journey-{journey_id}",
             "sk": f"topic-{topic_id}",
-            "description": topic["Description"],
+            "description": topic["Name"],
             "type": topic["Type"]
         }
         topic_info_record = {
@@ -47,8 +47,9 @@ def add_journey():
         }
         topic_records = [{
             "pk": f"topic-{journey_id}-{topic_id}",
-            "sk": f"{activity['Type'].lower()}-{activity['Id']}"
-        } for activity in (topic.get("Activities") or [])]
+            "sk": f"session-{session['Id']}",
+            "description": session.get("Description")
+        } for session in (topic.get("Sessions") or [])]
         topic_records.append(journey_topic_record)
         topic_records.append(topic_info_record)
         all_records.extend(topic_records)
